@@ -3,157 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI History Timeline</title>
+    <title>AI History Timeline - Interactive Parallax Experience</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
             font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            scroll-behavior: smooth;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
         }
         
-        .controls {
-            text-align: center;
-            margin-bottom: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* Animated background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         
-        .controls button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            background: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(33, 150, 243, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
         }
         
-        .controls button:hover {
-            background: #1976D2;
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+            }
+            to {
+                transform: translateY(-100px) translateX(100px);
+            }
         }
         
-        .controls button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+        /* Parallax layers */
+        .parallax-container {
+            position: relative;
+            z-index: 2;
         }
         
-        .page-indicator {
-            display: inline-block;
-            margin: 0 20px;
+        .parallax-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+        
+        .layer-1 {
+            background: radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.1) 0%, transparent 50%);
+            transform: translateZ(-1px) scale(2);
+        }
+        
+        .layer-2 {
+            background: radial-gradient(circle at 80% 80%, rgba(255, 87, 34, 0.05) 0%, transparent 60%);
+            transform: translateZ(-2px) scale(3);
+        }
+        
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(33, 150, 243, 0.15) 0%, transparent 70%);
+        }
+        
+        .hero h1 {
+            font-size: 5em;
             font-weight: bold;
+            text-align: center;
+            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 50%, #FF5722 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5em;
+            color: #64B5F6;
+            opacity: 0.8;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Timeline sections */
+        .timeline-section {
+            position: relative;
+            padding: 100px 0;
+            z-index: 10;
+        }
+        
+        .section-title {
+            font-size: 3.5em;
+            text-align: center;
+            margin-bottom: 80px;
+            background: linear-gradient(90deg, #64B5F6 0%, #2196F3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
         }
         
         .timeline-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin: 0 auto;
             max-width: 1200px;
-        }
-        
-        .timeline-page {
-            display: none;
-            padding: 40px;
-            padding-left: 60px;
-            min-height: 800px;
+            margin: 0 auto;
             position: relative;
+            padding: 0 50px;
         }
         
-        .timeline-page.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .page-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #2196F3;
-        }
-        
+        /* Central timeline line */
         .timeline-line {
             position: absolute;
-            left: 150px;
-            top: 120px;
-            bottom: 80px;
+            left: 50%;
+            top: 0;
+            bottom: 0;
             width: 4px;
-            background: linear-gradient(to bottom, #2196F3, #64B5F6);
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                #2196F3 10%, 
+                #64B5F6 50%, 
+                #2196F3 90%, 
+                transparent 100%
+            );
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.5);
         }
         
+        /* Timeline items */
         .timeline-item {
             position: relative;
-            margin-bottom: 50px;
-            padding-left: 190px;
-            min-height: 80px;
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
         }
         
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(even) {
+            text-align: right;
+            padding-right: 55%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            text-align: left;
+            padding-left: 55%;
+        }
+        
+        /* Timeline dots */
         .timeline-dot {
             position: absolute;
-            left: 138px;
-            top: 0;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             background: #2196F3;
-            border: 4px solid white;
+            border: 4px solid #1a1a1a;
             border-radius: 50%;
-            box-shadow: 0 0 0 4px #E3F2FD;
-            z-index: 1;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2),
+                        0 0 30px rgba(33, 150, 243, 0.6);
             transition: all 0.3s ease;
         }
         
         .timeline-item:hover .timeline-dot {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 6px #E3F2FD;
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 0 0 6px rgba(33, 150, 243, 0.3),
+                        0 0 50px rgba(33, 150, 243, 0.8);
         }
         
         .timeline-dot.major {
-            width: 36px;
-            height: 36px;
-            left: 134px;
-            background: #FF5722;
-            box-shadow: 0 0 0 6px #FFCCBC;
-            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FF5722 0%, #FF8A65 100%);
+            box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.2),
+                        0 0 40px rgba(255, 87, 34, 0.6);
         }
         
         .timeline-item:hover .timeline-dot.major {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 8px #FFCCBC;
+            box-shadow: 0 0 0 6px rgba(255, 87, 34, 0.3),
+                        0 0 60px rgba(255, 87, 34, 0.8);
+        }
+        
+        /* Content styling */
+        .timeline-content {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #2196F3, transparent, #FF5722);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .timeline-content:hover::before {
+            opacity: 0.5;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
         
         .timeline-date {
-            position: absolute;
-            left: 20px;
-            top: 2px;
+            display: inline-block;
             background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
             color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 25px;
             font-weight: bold;
-            font-size: 13px;
-            white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
-            letter-spacing: 0.5px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        .timeline-item:hover .timeline-date {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .timeline-content:hover .timeline-date::after {
+            left: 150%;
         }
         
         .timeline-date.future {
@@ -164,1321 +312,1413 @@
             background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         }
         
-        .timeline-content {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2196F3;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-left: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .timeline-content:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transform: translateX(2px);
-        }
-        
-        .timeline-content.major {
-            border-left-color: #FF5722;
-            background: #FFF3E0;
-            margin-left: 20px;
-            transition: all 0.3s ease;
-        }
-        
         .timeline-title {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
+            color: #ffffff;
         }
         
         .timeline-description {
-            color: #666;
-            line-height: 1.6;
-            font-size: 14px;
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 16px;
         }
         
         .timeline-tech {
-            margin-top: 12px;
-            font-size: 12px;
-            color: #6B7280;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #64B5F6;
             font-style: italic;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .legend {
-            position: absolute;
-            bottom: 20px;
-            right: 40px;
-            background: #f8f9fa;
-            padding: 20px;
-            padding-top: 20px;
-            border-radius: 8px;
-            font-size: 12px;
-            margin-top: 60px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .legend-item {
+        /* Era separators */
+        .era-separator {
+            position: relative;
+            height: 300px;
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            justify-content: center;
+            margin: 150px 0;
+            overflow: hidden;
         }
         
-        .legend-item:last-child {
-            margin-bottom: 0;
+        .era-separator::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #2196F3, transparent);
+            animation: pulse 3s ease-in-out infinite;
         }
         
-        .legend-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 10px;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
         
-        .export-info {
+        .era-title {
+            font-size: 2.5em;
+            font-weight: bold;
             text-align: center;
-            margin-top: 20px;
-            color: #666;
-            font-size: 14px;
+            padding: 20px 40px;
+            background: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid #2196F3;
+            border-radius: 50px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 40px rgba(33, 150, 243, 0.5);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 100px 20px 50px;
+            color: #64B5F6;
+            font-size: 1.2em;
+            position: relative;
+            background: linear-gradient(to bottom, transparent, rgba(33, 150, 243, 0.05));
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .timeline-item:nth-child(even),
+            .timeline-item:nth-child(odd) {
+                padding: 0 20px 0 70px;
+                text-align: left;
+            }
+            
+            .timeline-line {
+                left: 35px;
+            }
+            
+            .timeline-dot {
+                left: 35px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="controls">
-        <button onclick="previousPage()" id="prevBtn">Previous</button>
-        <span class="page-indicator">Page <span id="currentPage">1</span> of <span id="totalPages">7</span></span>
-        <button onclick="nextPage()" id="nextBtn">Next</button>
-        <button onclick="exportPage()">Export Current Page as PNG</button>
+    <!-- Animated background particles -->
+    <div class="background-animation" id="particles"></div>
+    
+    <!-- Parallax layers -->
+    <div class="parallax-layer layer-1"></div>
+    <div class="parallax-layer layer-2"></div>
+    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>The Evolution of AI</h1>
+        <p class="hero-subtitle">From Ancient Logic to Modern Intelligence</p>
+        <p class="hero-subtitle">2,400 Years of Human Ingenuity</p>
+        <div class="scroll-indicator">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+                <path d="M20 10 L20 30 M12 22 L20 30 L28 22" stroke="#64B5F6" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
     </div>
     
-    <div class="timeline-container">
-        <!-- Page 1: Ancient Foundations to Early Computing (384 BCE - 1940) -->
-        <div class="timeline-page active" id="page1">
-            <h1 class="page-title">AI Timeline: Ancient Foundations to Early Computing</h1>
+    <!-- Ancient Foundations Era -->
+    <div class="era-separator">
+        <h2 class="era-title">Ancient Foundations to Early Computing</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">384 BCE</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Aristotle's Formal Logic</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">384 BCE</span>
+                    <h3 class="timeline-title">Aristotle's Formal Logic</h3>
+                    <p class="timeline-description">
                         "A single assertion must always either affirm or deny a single predicate of a single subject." 
                         Aristotle establishes formal reasoning and syllogistic logic, creating the binary foundation that would eventually underpin all digital computing.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Contribution: Binary logic, formal reasoning systems</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">279 BCE</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Stoic Propositional Logic</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">279 BCE</span>
+                    <h3 class="timeline-title">Stoic Propositional Logic</h3>
+                    <p class="timeline-description">
                         Chrysippus of Soli develops propositional logic focusing on relationships between complete statements. 
                         Introduces conditional reasoning ("if-then" structures) remarkably similar to modern Boolean logic.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">820 CE</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Al-Khwarizmi's Algorithms</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">820 CE</span>
+                    <h3 class="timeline-title">Al-Khwarizmi's Algorithms</h3>
+                    <p class="timeline-description">
                         Muhammad ibn Musa al-Khwarizmi introduces systematic, step-by-step problem-solving procedures. 
                         The word "algorithm" derives from his name, establishing the conceptual framework for all computational processes.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1275</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Ramon Llull's Ars Magna</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1275</span>
+                    <h3 class="timeline-title">Ramon Llull's Ars Magna</h3>
+                    <p class="timeline-description">
                         Creates the first mechanical reasoning device using rotating paper disks to generate logical combinations. 
                         Considered the first attempt at mechanizing thought processes.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1642</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Pascal's Calculator</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1642</span>
+                    <h3 class="timeline-title">Pascal's Calculator</h3>
+                    <p class="timeline-description">
                         Blaise Pascal builds the first mechanical calculator, demonstrating that machines could perform mathematical reasoning.
-                    </div>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">1837</span>
+                    <h3 class="timeline-title">Babbage's Analytical Engine</h3>
+                    <p class="timeline-description">
+                        Charles Babbage designs the first Turing-complete mechanical computer. 
+                        Ada Lovelace writes the first algorithm and envisions computers beyond mere calculation.
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1854</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Boolean Algebra</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1854</span>
+                    <h3 class="timeline-title">Boolean Algebra</h3>
+                    <p class="timeline-description">
                         George Boole publishes "An Investigation of the Laws of Thought," introducing Boolean algebra with AND, OR, NOT operations. 
                         This mathematical formalization of logic would later be recognized as the foundation of digital circuit design.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: Foundation of all modern computing</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1879</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Frege's Predicate Logic</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1879</span>
+                    <h3 class="timeline-title">Frege's Predicate Logic</h3>
+                    <p class="timeline-description">
                         Gottlob Frege creates the first complete system of predicate logic in his Begriffsschrift, 
                         providing the rigorous formal framework necessary for automated reasoning.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1880</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Venn Diagrams</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1880</span>
+                    <h3 class="timeline-title">Venn Diagrams</h3>
+                    <p class="timeline-description">
                         John Venn introduces Venn diagrams for visualizing set theory relationships, 
                         making logical relationships more intuitive and accessible.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1910-13</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Principia Mathematica</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1910-13</span>
+                    <h3 class="timeline-title">Principia Mathematica</h3>
+                    <p class="timeline-description">
                         Whitehead and Russell attempt to derive all mathematics from logical principles. 
                         This monumental work makes AI seem feasible by suggesting all reasoning could be formalized.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Significance: Inspired the quest to mechanize thought</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1936</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Turing Machine</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1936</span>
+                    <h3 class="timeline-title">Turing Machine</h3>
+                    <p class="timeline-description">
                         Alan Turing introduces the theoretical Turing Machine, proving that a simple device manipulating symbols 
                         could perform any computation. Establishes the theoretical foundation of computer science.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Legacy: Defined the limits of mechanical computation</div>
                 </div>
             </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">1837</div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Babbage's Analytical Engine</div>
-                    <div class="timeline-description">
-                        Charles Babbage designs the first Turing-complete mechanical computer. 
-                        Ada Lovelace writes the first algorithm and envisions computers beyond mere calculation.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #2196F3;"></div>
-                    <span>Regular milestone</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #FF5722;"></div>
-                    <span>Major breakthrough</span>
-                </div>
-            </div>
         </div>
-        
-        <!-- Page 2: Birth of AI (1940s-1960s) -->
-        <div class="timeline-page" id="page2">
-            <h1 class="page-title">The Birth of Artificial Intelligence (1940s-1960s)</h1>
+    </section>
+    
+    <!-- Birth of AI Era -->
+    <div class="era-separator">
+        <h2 class="era-title">The Birth of Artificial Intelligence</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1943</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">McCulloch-Pitts Neuron</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1943</span>
+                    <h3 class="timeline-title">McCulloch-Pitts Neuron</h3>
+                    <p class="timeline-description">
                         Warren McCulloch and Walter Pitts publish "A Logical Calculus of Ideas Immanent in Nervous Activity," 
                         creating the first mathematical model of artificial neurons. This bridges biology and computation.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Innovation: First artificial neuron model</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1948</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Shannon's Information Theory</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1948</span>
+                    <h3 class="timeline-title">Shannon's Information Theory</h3>
+                    <p class="timeline-description">
                         Claude Shannon establishes information theory, providing the mathematical framework for digital communication 
                         and establishing the bit as the fundamental unit of information.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1950</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Turing Test</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1950</span>
+                    <h3 class="timeline-title">Turing Test</h3>
+                    <p class="timeline-description">
                         Alan Turing proposes the "Imitation Game" in "Computing Machinery and Intelligence," 
                         establishing a practical test for machine intelligence.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1951</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">SNARC - First Neural Network Machine</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1951</span>
+                    <h3 class="timeline-title">SNARC - First Neural Network Machine</h3>
+                    <p class="timeline-description">
                         Marvin Minsky creates the Stochastic Neural Analog Reinforcement Calculator, the first artificial neural network machine. 
                         Built with vacuum tubes, it simulates a rat finding its way through a maze using 40 artificial neurons.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Components: Vacuum tubes, adjustable knobs for memory</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1952-62</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Arthur Samuel's Checkers Program</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1952-62</span>
+                    <h3 class="timeline-title">Arthur Samuel's Checkers Program</h3>
+                    <p class="timeline-description">
                         Creates a checkers-playing program that improves through self-play. 
                         Coins the term "machine learning" and demonstrates that computers can learn from experience.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1956</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Dartmouth Conference - Birth of AI</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1956</span>
+                    <h3 class="timeline-title">Dartmouth Conference - Birth of AI</h3>
+                    <p class="timeline-description">
                         Organized by McCarthy, Minsky, Shannon, and Rochester. Formally establishes AI as a field with the goal to 
                         "simulate every aspect of learning or any other feature of intelligence." The Logic Theorist, first AI program, is presented.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Significance: AI becomes an academic discipline</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1957</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Perceptron</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1957</span>
+                    <h3 class="timeline-title">Perceptron</h3>
+                    <p class="timeline-description">
                         Frank Rosenblatt develops the Perceptron, the first practical neural network with learning capability 
                         through adjustable weights and error-based learning.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1957</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">General Problem Solver</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1957</span>
+                    <h3 class="timeline-title">General Problem Solver</h3>
+                    <p class="timeline-description">
                         Newell and Simon create GPS, using abstract problem representation and flexible operators 
                         to tackle problems across various domains, unlike the domain-specific Logic Theorist.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1958</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">LISP Programming Language</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1958</span>
+                    <h3 class="timeline-title">LISP Programming Language</h3>
+                    <p class="timeline-description">
                         John McCarthy creates LISP, which becomes the dominant programming language for AI development 
                         for the next several decades.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1960</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">ADALINE/MADALINE</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1960</span>
+                    <h3 class="timeline-title">ADALINE/MADALINE</h3>
+                    <p class="timeline-description">
                         Widrow & Hoff introduce continuous outputs and the least-mean-square learning rule, 
                         providing more robust learning than the perceptron.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1964-67</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">ELIZA Chatbot</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1964-67</span>
+                    <h3 class="timeline-title">ELIZA Chatbot</h3>
+                    <p class="timeline-description">
                         Joseph Weizenbaum creates ELIZA, which rephrases user input to simulate conversation. 
                         Despite its simplicity, it occasionally fools people into thinking it's human, 
                         leading to the concept of the "ELIZA Effect."
-                    </div>
+                    </p>
                     <div class="timeline-tech">Method: Pattern matching and keyword substitution</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1965</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">DENDRAL Expert System</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1965</span>
+                    <h3 class="timeline-title">DENDRAL Expert System</h3>
+                    <p class="timeline-description">
                         First expert system for identifying molecular structures. 
                         Pioneers the use of domain-specific knowledge in AI systems.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1969</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Perceptrons Book - Beginning of AI Winter</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1969</span>
+                    <h3 class="timeline-title">Perceptrons Book - Beginning of AI Winter</h3>
+                    <p class="timeline-description">
                         Minsky and Papert publish "Perceptrons," criticizing single-layer neural networks' limitations (like XOR problem). 
                         This effectively halts neural network research for over a decade, contributing to the first AI Winter.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: Neural network funding dried up until 1980s</div>
                 </div>
             </div>
         </div>
-        
-        <!-- Page 3: First AI Winter & Revival (1970s-1980s) -->
-        <div class="timeline-page" id="page3">
-            <h1 class="page-title">AI Winter and Neural Network Revival (1970s-1980s)</h1>
+    </section>
+    
+    <!-- AI Winter and Revival Era -->
+    <div class="era-separator">
+        <h2 class="era-title">AI Winter and Neural Network Revival</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1970</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Seppo Linnainmaa's Automatic Differentiation</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1970</span>
+                    <h3 class="timeline-title">Seppo Linnainmaa's Automatic Differentiation</h3>
+                    <p class="timeline-description">
                         Develops the "reverse mode of automatic differentiation" for analyzing computational rounding errors. 
                         This mathematical foundation would later become backpropagation.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1973-80</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">First AI Winter</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1973-80</span>
+                    <h3 class="timeline-title">First AI Winter</h3>
+                    <p class="timeline-description">
                         DARPA cuts AI funding after Lighthill Report criticizes AI's failure to handle "combinatorial explosion." 
                         Combined with Minsky's critique of perceptrons, research stagnates. Many influential researchers quit the field.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Causes: Overpromises, computational limitations, theoretical roadblocks</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1974</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Paul Werbos - Backpropagation Discovery</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1974</span>
+                    <h3 class="timeline-title">Paul Werbos - Backpropagation Discovery</h3>
+                    <p class="timeline-description">
                         Discovers backpropagation algorithm in his PhD thesis, but it remains largely unnoticed 
                         until popularized by Rumelhart, Hinton, and Williams in 1986.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1980</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Neocognitron</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1980</span>
+                    <h3 class="timeline-title">Neocognitron</h3>
+                    <p class="timeline-description">
                         Kunihiko Fukushima develops the Neocognitron with hierarchical feature extraction, 
                         presaging modern convolutional neural networks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1980s</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">XCON Expert System</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1980s</span>
+                    <h3 class="timeline-title">XCON Expert System</h3>
+                    <p class="timeline-description">
                         Digital Equipment Corporation's XCON checks computer component compatibility, 
                         saving $25 million annually. Sparks expert system boom but implementation details kept secret.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Problem highlighted: Gatekeeping of AI knowledge</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1982</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Hopfield Networks</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1982</span>
+                    <h3 class="timeline-title">Hopfield Networks</h3>
+                    <p class="timeline-description">
                         John Hopfield creates networks with associative memory using energy-based dynamics. 
                         Can retrieve complete patterns from partial or noisy inputs. Marks the beginning of neural network revival.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Innovation: Content-addressable memory in neural networks</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1982</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Self-Organizing Maps</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1982</span>
+                    <h3 class="timeline-title">Self-Organizing Maps</h3>
+                    <p class="timeline-description">
                         Teuvo Kohonen develops SOMs for unsupervised learning and data visualization, 
                         inspired by how the brain organizes sensory information.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1984</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">CART Algorithm</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1983</span>
+                    <h3 class="timeline-title">SOAR Cognitive Architecture</h3>
+                    <p class="timeline-description">
+                        Laird, Newell, and Rosenbloom develop SOAR (State, Operator And Result) at CMU. 
+                        A unified theory of cognition that models human problem-solving and learning through 
+                        production rules and chunking. Still actively used for AI research today.
+                    </p>
+                    <div class="timeline-tech">Applications: Robotics, game AI, cognitive modeling</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">1984</span>
+                    <h3 class="timeline-title">CART Algorithm</h3>
+                    <p class="timeline-description">
                         Breiman et al. introduce Classification and Regression Trees, 
                         providing a versatile tool for both classification and regression tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1985</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Boltzmann Machines</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1985</span>
+                    <h3 class="timeline-title">Boltzmann Machines</h3>
+                    <p class="timeline-description">
                         Hinton and Sejnowski introduce stochastic neural networks that can learn internal representations, 
                         using simulated annealing for optimization.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1986</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Backpropagation Popularized</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1986</span>
+                    <h3 class="timeline-title">Backpropagation Popularized</h3>
+                    <p class="timeline-description">
                         Rumelhart, Hinton, and Williams publish "Learning Representations by Back-Propagating Errors" in Nature. 
                         Demonstrates that multi-layer networks can be effectively trained, overcoming the XOR problem 
                         and reigniting interest in neural networks.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: Foundation for all modern deep learning</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1986</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Recurrent Neural Networks (RNNs)</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1986</span>
+                    <h3 class="timeline-title">Recurrent Neural Networks (RNNs)</h3>
+                    <p class="timeline-description">
                         David Rumelhart refines Hopfield Networks into modern RNNs for sequence processing. 
                         Still used today for language translation, speech recognition, and NLP tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1987</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Adaptive Resonance Theory</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1987</span>
+                    <h3 class="timeline-title">Adaptive Resonance Theory</h3>
+                    <p class="timeline-description">
                         Grossberg and Carpenter develop ART networks that solve the stability-plasticity dilemma, 
                         allowing networks to learn new patterns without forgetting old ones.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1987-93</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Second AI Winter</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1987-93</span>
+                    <h3 class="timeline-title">Second AI Winter</h3>
+                    <p class="timeline-description">
                         LISP machine market collapses overnight when standard workstations match their performance at fraction of cost. 
                         Expert systems prove brittle and expensive. Over 300 AI companies fail. 
                         Overpromises again lead to disillusionment.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Lesson: Hype cycles damage long-term progress</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1989</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">LeNet-1</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1989</span>
+                    <h3 class="timeline-title">LeNet-1</h3>
+                    <p class="timeline-description">
                         Yann LeCun creates the first successful convolutional neural network for handwritten digit recognition. 
                         Banks later adopt LeNet-5 for check processing.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Architecture: Convolution, pooling, fully connected layers</div>
                 </div>
             </div>
         </div>
-        
-        <!-- Page 4: Rise of Modern AI (1990s-2000s) -->
-        <div class="timeline-page" id="page4">
-            <h1 class="page-title">The Rise of Modern AI (1990s-2000s)</h1>
+    </section>
+    
+    <!-- Rise of Modern AI Era -->
+    <div class="era-separator">
+        <h2 class="era-title">The Rise of Modern AI</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1990s</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Honda P Series Robots</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1990s</span>
+                    <h3 class="timeline-title">Honda P Series Robots</h3>
+                    <p class="timeline-description">
                         Honda develops P1, P2, and P3 humanoid robots (130-210kg), predecessors to ASIMO. 
                         Demonstrates progress in robotics and AI integration for physical tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1992</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Resilient Propagation (Rprop)</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1992</span>
+                    <h3 class="timeline-title">Resilient Propagation (Rprop)</h3>
+                    <p class="timeline-description">
                         Introduced as a robust training algorithm using only gradient signs, 
                         avoiding issues with gradient magnitudes in deep networks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1995</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">LSTM Networks</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1995</span>
+                    <h3 class="timeline-title">LSTM Networks</h3>
+                    <p class="timeline-description">
                         Hochreiter and Schmidhuber introduce Long Short-Term Memory networks to solve the vanishing gradient problem. 
                         Enables learning of long-term dependencies in sequences, revolutionizing sequence modeling.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Applications: Language modeling, speech recognition, time series</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1995</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Support Vector Machines</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1995</span>
+                    <h3 class="timeline-title">Support Vector Machines</h3>
+                    <p class="timeline-description">
                         Vapnik and Cortes formalize SVMs with the kernel trick for non-linear classification. 
                         Becomes dominant ML algorithm in late 1990s and early 2000s.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">1996</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Deep Blue Defeats Kasparov</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">1997</span>
+                    <h3 class="timeline-title">Deep Blue Defeats Kasparov</h3>
+                    <p class="timeline-description">
                         IBM's Deep Blue becomes the first computer to defeat world chess champion Garry Kasparov 
                         under regular time controls. Marks a milestone in AI achieving superhuman performance in complex games.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Method: Brute force search with sophisticated evaluation</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1998</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">LeNet-5 Deployed</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1998</span>
+                    <h3 class="timeline-title">LeNet-5 Deployed</h3>
+                    <p class="timeline-description">
                         Banks widely adopt LeCun's LeNet-5 for automated check processing, 
                         one of the first commercial deployments of deep learning.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">1999</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Sony AIBO Robot Dog</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">1999</span>
+                    <h3 class="timeline-title">Sony AIBO Robot Dog</h3>
+                    <p class="timeline-description">
                         First consumer AI robot pet capable of face recognition, detecting smiles, 
                         and learning tricks. Shows AI entering consumer market.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2001</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Random Forests</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2001</span>
+                    <h3 class="timeline-title">Random Forests</h3>
+                    <p class="timeline-description">
                         Leo Breiman introduces Random Forests, combining bagging with random feature selection 
                         for robust ensemble learning.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2002</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">iRobot Roomba</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2002</span>
+                    <h3 class="timeline-title">iRobot Roomba</h3>
+                    <p class="timeline-description">
                         First successful consumer robot vacuum, demonstrating practical AI 
                         for everyday household tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2004</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">DARPA Grand Challenge</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2004</span>
+                    <h3 class="timeline-title">DARPA Grand Challenge</h3>
+                    <p class="timeline-description">
                         Autonomous vehicle competition spurring development in self-driving technology. 
                         No vehicle completes the course in first year.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2005</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Stanley Wins DARPA Challenge</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2005</span>
+                    <h3 class="timeline-title">Stanley Wins DARPA Challenge</h3>
+                    <p class="timeline-description">
                         Stanford's autonomous vehicle "Stanley" wins $2 million DARPA Grand Challenge, 
                         completing 132-mile desert course autonomously.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2006</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Deep Learning Renaissance Begins</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2006</span>
+                    <h3 class="timeline-title">Deep Learning Renaissance Begins</h3>
+                    <p class="timeline-description">
                         Geoffrey Hinton et al. introduce Deep Belief Networks with layer-wise pre-training. 
                         Solves the vanishing gradient problem that had plagued deep networks, 
                         marking the beginning of the modern deep learning era.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Breakthrough: Enables training of truly deep networks</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2008</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">t-SNE Visualization</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2008</span>
+                    <h3 class="timeline-title">t-SNE Visualization</h3>
+                    <p class="timeline-description">
                         Van der Maaten and Hinton introduce t-SNE for high-dimensional data visualization, 
                         becoming essential tool for understanding neural network representations.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2009</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">ImageNet Dataset</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2009</span>
+                    <h3 class="timeline-title">ImageNet Dataset</h3>
+                    <p class="timeline-description">
                         Fei-Fei Li creates ImageNet with 14 million labeled images. 
                         Provides the large-scale data needed to train deep neural networks effectively.
-                    </div>
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <!-- Page 5: Deep Learning Revolution (2010-2017) -->
-        <div class="timeline-page" id="page5">
-            <h1 class="page-title">The Deep Learning Revolution (2010-2017)</h1>
+    </section>
+    
+    <!-- Deep Learning Revolution Era -->
+    <div class="era-separator">
+        <h2 class="era-title">The Deep Learning Revolution</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2012</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">AlexNet Changes Everything</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2012</span>
+                    <h3 class="timeline-title">AlexNet Changes Everything</h3>
+                    <p class="timeline-description">
                         Krizhevsky, Sutskever, and Hinton win ImageNet by huge margin using deep CNNs on GPUs. 
                         Uses ReLU activation, dropout, and data augmentation. Reduces error from 26.2% to 15.3%, 
                         sparking the deep learning boom.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Key innovations: GPU training, ReLU, Dropout, parallel processing</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2012</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Dropout Regularization</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2012</span>
+                    <h3 class="timeline-title">Dropout Regularization</h3>
+                    <p class="timeline-description">
                         Hinton et al. introduce dropout, randomly deactivating neurons during training 
                         to prevent overfitting. Becomes standard technique in deep learning.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2014</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Generative Adversarial Networks (GANs)</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2014</span>
+                    <h3 class="timeline-title">Generative Adversarial Networks (GANs)</h3>
+                    <p class="timeline-description">
                         Ian Goodfellow introduces GANs: two networks competing against each other. 
                         Generator creates fake data, discriminator detects fakes. Revolutionizes generative modeling 
                         and enables unsupervised learning from raw data.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: Photorealistic image generation, style transfer</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2014</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">VGGNet</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2014</span>
+                    <h3 class="timeline-title">VGGNet</h3>
+                    <p class="timeline-description">
                         Shows that deeper networks with small 3×3 filters outperform shallow networks 
                         with larger filters. Pushes networks to 16-19 layers.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2014</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">GoogLeNet/Inception</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2014</span>
+                    <h3 class="timeline-title">GoogLeNet/Inception</h3>
+                    <p class="timeline-description">
                         Introduces inception modules with multi-scale processing and 1×1 convolutions 
                         for dimensionality reduction. Wins ImageNet with 22 layers.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2014</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Sequence-to-Sequence Models</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2014</span>
+                    <h3 class="timeline-title">Sequence-to-Sequence Models</h3>
+                    <p class="timeline-description">
                         Sutskever, Vinyals, and Le introduce seq2seq with encoder-decoder architecture, 
                         revolutionizing machine translation and dialogue systems.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2014</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Gated Recurrent Units (GRU)</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2014</span>
+                    <h3 class="timeline-title">Gated Recurrent Units (GRU)</h3>
+                    <p class="timeline-description">
                         Cho et al. simplify LSTM design while maintaining performance, 
                         making recurrent networks more efficient.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2015</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">ResNet - Skip Connections</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2015</span>
+                    <h3 class="timeline-title">ResNet - Skip Connections</h3>
+                    <p class="timeline-description">
                         He et al. introduce residual connections, enabling training of 100+ layer networks. 
                         Solves degradation problem where deeper networks performed worse. 
                         Wins ImageNet with 152 layers.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Key insight: Learn residual functions instead of direct mappings</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2015</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Batch Normalization</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2015</span>
+                    <h3 class="timeline-title">Batch Normalization</h3>
+                    <p class="timeline-description">
                         Ioffe and Szegedy introduce batch normalization, stabilizing training 
                         and enabling much higher learning rates. Becomes essential for deep networks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2015</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">U-Net</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2015</span>
+                    <h3 class="timeline-title">U-Net</h3>
+                    <p class="timeline-description">
                         Ronneberger et al. create U-Net for biomedical image segmentation 
                         with encoder-decoder architecture and skip connections.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2016</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">DenseNet</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2016</span>
+                    <h3 class="timeline-title">DenseNet</h3>
+                    <p class="timeline-description">
                         Huang et al. connect every layer to every other layer in feedforward fashion, 
                         improving gradient flow and parameter efficiency.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2016</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">AlphaGo Defeats Lee Sedol</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2016</span>
+                    <h3 class="timeline-title">AlphaGo Defeats Lee Sedol</h3>
+                    <p class="timeline-description">
                         DeepMind's AlphaGo defeats world champion Go player 4-1, 
                         achieving what many thought impossible for decades.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2017</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Transformer Architecture - "Attention Is All You Need"</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2017</span>
+                    <h3 class="timeline-title">Transformer Architecture - "Attention Is All You Need"</h3>
+                    <p class="timeline-description">
                         Vaswani et al. from Google introduce Transformers, replacing recurrence with self-attention. 
                         Enables parallelization and handling of much longer sequences. 
                         Becomes foundation for all modern language models.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: GPT, BERT, and entire LLM revolution</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2017</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Capsule Networks</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2017</span>
+                    <h3 class="timeline-title">Capsule Networks</h3>
+                    <p class="timeline-description">
                         Geoffrey Hinton introduces CapsNets with dynamic routing 
                         to better model hierarchical relationships in data.
-                    </div>
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <!-- Page 6: Era of Large Models (2018-2025) -->
-        <div class="timeline-page" id="page6">
-            <h1 class="page-title">The Era of Large Language Models (2018-2025)</h1>
+    </section>
+    
+    <!-- Era of Large Models -->
+    <div class="era-separator">
+        <h2 class="era-title">The Era of Large Language Models</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2018</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">GPT-1</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2018</span>
+                    <h3 class="timeline-title">GPT-1</h3>
+                    <p class="timeline-description">
                         OpenAI demonstrates unsupervised pre-training with 117M parameters. 
                         Shows that language models can be fine-tuned for various tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2018</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">BERT</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2018</span>
+                    <h3 class="timeline-title">BERT</h3>
+                    <p class="timeline-description">
                         Google introduces bidirectional pre-training, achieving state-of-the-art 
                         on 11 NLP tasks. Shows the power of masked language modeling.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Innovation: Bidirectional context understanding</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2019</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">GPT-2</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2019</span>
+                    <h3 class="timeline-title">GPT-2</h3>
+                    <p class="timeline-description">
                         OpenAI scales to 1.5B parameters. Initially withheld due to misuse concerns, 
                         sparking debate about AI safety and open research.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2020</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">GPT-3</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2020</span>
+                    <h3 class="timeline-title">GPT-3</h3>
+                    <p class="timeline-description">
                         175B parameters demonstrate emergent few-shot learning abilities. 
                         Can perform tasks with just examples, no fine-tuning needed. 
                         Marks shift to foundation models.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Breakthrough: In-context learning emerges</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2020</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Vision Transformer (ViT)</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2020</span>
+                    <h3 class="timeline-title">Vision Transformer (ViT)</h3>
+                    <p class="timeline-description">
                         Dosovitskiy et al. apply transformers directly to image patches, 
                         showing convolutions aren't necessary for vision tasks.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2021</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">CLIP</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2021</span>
+                    <h3 class="timeline-title">CLIP</h3>
+                    <p class="timeline-description">
                         OpenAI aligns vision and language representations through contrastive learning 
                         on 400M image-text pairs. Enables zero-shot image classification.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2021</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">DALL-E</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2021</span>
+                    <h3 class="timeline-title">DALL-E</h3>
+                    <p class="timeline-description">
                         OpenAI demonstrates text-to-image generation using discrete VAE and autoregressive transformer. 
                         Shows AI can create novel visual concepts.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2021</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Anthropic Founded</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2021</span>
+                    <h3 class="timeline-title">Anthropic Founded</h3>
+                    <p class="timeline-description">
                         Former OpenAI researchers led by Dario and Daniela Amodei found Anthropic, 
                         focusing on AI safety and building "helpful, harmless, and honest" AI systems.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Mission: Steerable, interpretable, and safe AI</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2022</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Stable Diffusion</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Stable Diffusion</h3>
+                    <p class="timeline-description">
                         Stability AI releases open-source text-to-image diffusion model. 
                         Democratizes AI art generation, sparking creative revolution and controversy.
-                    </div>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Instant Neural Graphics Primitives</h3>
+                    <p class="timeline-description">
+                        NVIDIA introduces Instant NGP, achieving real-time neural radiance field (NeRF) rendering. 
+                        Reduces training time from hours to seconds using multi-resolution hash encoding, 
+                        enabling instant 3D scene reconstruction from 2D images.
+                    </p>
+                    <div class="timeline-tech">Breakthrough: Real-time neural 3D rendering</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2022</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">ChatGPT Launch</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">ChatGPT Launch</h3>
+                    <p class="timeline-description">
                         OpenAI releases ChatGPT, reaching 100M users in 2 months. 
                         Brings conversational AI to mainstream, triggering global AI awareness and investment boom.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Impact: AI becomes household technology</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2023</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Constitutional AI</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Constitutional AI</h3>
+                    <p class="timeline-description">
                         Anthropic develops training method using AI feedback based on constitutional principles 
                         rather than extensive human feedback. Enables more precise control.
-                    </div>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">LIDA - Automated Data Visualization</h3>
+                    <p class="timeline-description">
+                        Microsoft Research releases LIDA (Language-based Interactive Data Analysis), 
+                        combining LLMs with visualization generation. Automatically creates meaningful 
+                        charts and insights from natural language queries about data.
+                    </p>
+                    <div class="timeline-tech">Innovation: LLM-powered automated analytics</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2023</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Claude 1 Launch</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Claude 1 Launch</h3>
+                    <p class="timeline-description">
                         Anthropic releases Claude with 9,000 token context and strong conversational abilities. 
                         Emphasizes safety and helpfulness through Constitutional AI training.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2023</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">GPT-4</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">GPT-4</h3>
+                    <p class="timeline-description">
                         OpenAI's multimodal model with estimated 500B-1.7T parameters. 
                         Shows significant improvements in reasoning and reduced hallucination.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2023</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Open Source Explosion</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Open Source Explosion</h3>
+                    <p class="timeline-description">
                         Meta's LLaMA leak sparks open-source revolution. 
                         Mistral, Falcon, MPT, and dozens of models democratize LLM access.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2024</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Claude 3 Family</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Claude 3 Family</h3>
+                    <p class="timeline-description">
                         Anthropic releases Opus, Sonnet, and Haiku models with multimodal capabilities 
                         and 200,000 token context windows.
-                    </div>
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <!-- Page 7: Current State and Future (2025+) -->
-        <div class="timeline-page" id="page7">
-            <h1 class="page-title">Current State and Future of AI (2025)</h1>
+    </section>
+    
+    <!-- Current State and Future -->
+    <div class="era-separator">
+        <h2 class="era-title">Current State and Future of AI</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date">2025</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">Claude Opus 4</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Claude Opus 4</h3>
+                    <p class="timeline-description">
                         Current state-of-the-art with 72.5% on SWE-bench. Features hybrid reasoning with 64K thinking tokens, 
                         capable of 7+ hours autonomous coding. Represents culmination of 2,400 years of progress 
                         from Aristotle's logic to modern AI.
-                    </div>
+                    </p>
                     <div class="timeline-tech">Capabilities: Extended reasoning, multimodal understanding, code generation</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2025</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Current Landscape</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Landscape</h3>
+                    <p class="timeline-description">
                         Thousands of models from numerous companies: Google's Gemini, Meta's LLaMA 3, 
                         Anthropic's Claude, OpenAI's GPT series, Mistral, DeepSeek, Qwen, and many others. 
                         AI integration becoming ubiquitous in software.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2025</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Technical Innovations</div>
-                    <div class="timeline-description">
-                        - Efficient architectures: Mamba, RWKV challenging transformers
-                        - Mixture of Experts for scale
-                        - Flash Attention for memory efficiency
-                        - LoRA/QLoRA for efficient fine-tuning
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Technical Innovations</h3>
+                    <p class="timeline-description">
+                        - Efficient architectures: Mamba, RWKV challenging transformers<br>
+                        - Mixture of Experts for scale<br>
+                        - Flash Attention for memory efficiency<br>
+                        - LoRA/QLoRA for efficient fine-tuning<br>
                         - RAG for knowledge integration
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2025</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Current Challenges</div>
-                    <div class="timeline-description">
-                        - Hallucination and reliability
-                        - Computational costs and energy usage
-                        - AI safety and alignment
-                        - Corporate responsibility (e.g., Amazon's fake AI store scandal)
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Challenges</h3>
+                    <p class="timeline-description">
+                        - Hallucination and reliability<br>
+                        - Computational costs and energy usage<br>
+                        - AI safety and alignment<br>
+                        - Corporate responsibility (e.g., Amazon's fake AI store scandal)<br>
                         - Democratization vs. concentration of power
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">2025</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">Rapid Evolution</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Rapid Evolution</h3>
+                    <p class="timeline-description">
                         Field changes so rapidly that long-term frameworks become obsolete quickly. 
                         Platforms like GitHub, HuggingFace, and Leanpub enable real-time knowledge sharing. 
                         Open-source community driving innovation alongside big tech.
-                    </div>
+                    </p>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot major"></div>
-                <div class="timeline-date future">Future</div>
-                <div class="timeline-content major">
-                    <div class="timeline-title">The Road Ahead</div>
-                    <div class="timeline-description">
+                <div class="timeline-content">
+                    <span class="timeline-date future">Future</span>
+                    <h3 class="timeline-title">The Road Ahead</h3>
+                    <p class="timeline-description">
                         From Aristotle's binary logic to Claude Opus 4's extended reasoning, 
-                        AI represents humanity's longest intellectual project. The journey continues with:
-                        - AGI aspirations
-                        - Multimodal reasoning
-                        - Embodied AI and robotics
-                        - Quantum-AI integration
+                        AI represents humanity's longest intellectual project. The journey continues with:<br>
+                        - AGI aspirations<br>
+                        - Multimodal reasoning<br>
+                        - Embodied AI and robotics<br>
+                        - Quantum-AI integration<br>
                         - Ensuring beneficial outcomes for humanity
-                    </div>
+                    </p>
                     <div class="timeline-tech">Key: Balancing capability with safety and accessibility</div>
                 </div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date reflection">Reflection</div>
                 <div class="timeline-content">
-                    <div class="timeline-title">2,400 Years of Progress</div>
-                    <div class="timeline-description">
+                    <span class="timeline-date reflection">Reflection</span>
+                    <h3 class="timeline-title">2,400 Years of Progress</h3>
+                    <p class="timeline-description">
                         What began with philosophers asking "What is thought?" has evolved into systems 
                         that can write, create, reason, and assist. Each breakthrough built on centuries 
                         of accumulated knowledge, showing AI as not a sudden invention but humanity's 
                         longest quest to understand and recreate intelligence.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #2196F3;"></div>
-                    <span>Regular milestone</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #FF5722;"></div>
-                    <span>Major breakthrough</span>
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     
-    <div class="export-info">
-        To save as PNG: Click "Export Current Page as PNG" for each page. The timeline is designed for high-resolution export.
+    <!-- Footer -->
+    <div class="footer">
+        <p>The evolution of AI continues...<br>From ancient logic to modern intelligence, the journey of 2,400 years.</p>
     </div>
     
     <script>
-        let currentPage = 1;
-        const totalPages = 7;
-        
-        function updateButtons() {
-            document.getElementById('prevBtn').disabled = currentPage === 1;
-            document.getElementById('nextBtn').disabled = currentPage === totalPages;
-            document.getElementById('currentPage').textContent = currentPage;
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particlesContainer.appendChild(particle);
+            }
         }
         
-        function showPage(pageNum) {
-            // Hide all pages
-            document.querySelectorAll('.timeline-page').forEach(page => {
-                page.classList.remove('active');
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-layer');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 * (index + 1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
             });
-            
-            // Show selected page
-            document.getElementById(`page${pageNum}`).classList.add('active');
-            currentPage = pageNum;
-            updateButtons();
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
+        });
         
-        function nextPage() {
-            if (currentPage < totalPages) {
-                showPage(currentPage + 1);
-            }
-        }
+        // Intersection Observer for timeline animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
         
-        function previousPage() {
-            if (currentPage > 1) {
-                showPage(currentPage - 1);
-            }
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
         
-        function exportPage() {
-            // This is a placeholder - in a real implementation, you'd use a library like html2canvas
-            alert(`To export Page ${currentPage}:\n\n1. Right-click on the timeline\n2. Select "Save as image" or take a screenshot\n3. For best quality, zoom to 100% before saving\n\nAlternatively, use browser print function (Ctrl+P) and save as PDF.`);
-        }
+        // Observe all timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
         
-        // Initialize
-        updateButtons();
+        // Initialize particles
+        createParticles();
+        
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
 </html>
