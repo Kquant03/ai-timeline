@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI History Timeline - Journey Through Intelligence</title>
+    <title>The Evolution of AI - An Epic Journey Through Time</title>
     <style>
         * {
             margin: 0;
@@ -11,100 +11,178 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --primary-dark: #1e40af;
+            --accent: #8b5cf6;
+            --accent-light: #a78bfa;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --bg-dark: #030712;
+            --bg-darker: #020617;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --text-dimmer: #64748b;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--accent));
+            --gradient-subtle: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(139, 92, 246, 0.1));
+            --border-glow: rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Smooth base styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
             overflow-x: hidden;
-            position: relative;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Subtle animated background gradient */
-        .background-gradient {
+        /* Elegant selection */
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Subtle background gradient */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 87, 34, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(100, 181, 246, 0.03) 0%, transparent 70%),
-                #0a0a0a;
+                radial-gradient(ellipse at top left, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            z-index: -3;
+            animation: subtle-shift 20s ease-in-out infinite;
+        }
+        
+        @keyframes subtle-shift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        /* Refined neural network background */
+        .neural-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
             z-index: -2;
-            animation: gradientShift 20s ease-in-out infinite;
+            pointer-events: none;
         }
         
-        @keyframes gradientShift {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.1) rotate(1deg);
-            }
+        .neural-bg canvas {
+            width: 100%;
+            height: 100%;
         }
         
-        /* Subtle floating orbs instead of particles */
-        .orbs {
+        /* Optimized particles */
+        .particle-field {
             position: fixed;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
         }
         
-        .orb {
+        .particle {
             position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-light);
             border-radius: 50%;
-            filter: blur(40px);
             opacity: 0;
-            animation: floatOrb 30s infinite;
+            animation: float-particle 15s infinite;
         }
         
-        .orb:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(33, 150, 243, 0.3) 0%, transparent 70%);
-            left: -150px;
-            animation-delay: 0s;
-        }
-        
-        .orb:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 87, 34, 0.2) 0%, transparent 70%);
-            right: -100px;
-            animation-delay: 10s;
-        }
-        
-        .orb:nth-child(3) {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(100, 181, 246, 0.25) 0%, transparent 70%);
-            left: 50%;
-            animation-delay: 20s;
-        }
-        
-        @keyframes floatOrb {
+        @keyframes float-particle {
             0% {
-                transform: translateY(100vh) translateX(0) scale(0.8);
                 opacity: 0;
+                transform: translateY(100vh) scale(0);
             }
             10% {
                 opacity: 0.4;
+                transform: translateY(90vh) scale(1);
             }
             90% {
                 opacity: 0.4;
+                transform: translateY(10vh) scale(1);
             }
             100% {
-                transform: translateY(-100vh) translateX(100px) scale(1.2);
                 opacity: 0;
+                transform: translateY(0) scale(0);
             }
         }
         
-        /* Hero section with legend */
+        /* Smooth loading transition */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-darker);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+        
+        .loading-content {
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 2rem;
+            border: 2px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s ease infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Elegant progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary-light);
+        }
+        
+        /* Hero section - refined */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -112,214 +190,362 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            z-index: 2;
-            padding: 40px 20px;
+            padding: 2rem;
         }
         
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 700;
-            text-align: center;
-            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 25%, #42A5F5 50%, #FF5722 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            animation: titleGlow 4s ease-in-out infinite;
-            background-size: 200% 200%;
-        }
-        
-        @keyframes titleGlow {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-        
-        .hero-subtitle {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: #64B5F6;
-            opacity: 0;
-            text-align: center;
-            margin-bottom: 10px;
-            animation: fadeInUp 1s ease forwards;
-        }
-        
-        .hero-subtitle:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-        
-        .hero-subtitle:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 0.9;
-                transform: translateY(0);
-            }
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-        }
-        
-        /* Legend */
-        .legend {
-            margin-top: 60px;
-            padding: 25px 35px;
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.9s forwards;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .legend-dot {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 3px solid #0a0a0a;
-            box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
-            position: relative;
-        }
-        
-        .legend-dot::after {
-            content: '';
+        .hero-background {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            filter: blur(10px);
-            opacity: 0.5;
+            inset: 0;
+            overflow: hidden;
             z-index: -1;
         }
         
-        .legend-dot.regular {
-            background: #2196F3;
+        .hero-gradient {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+            filter: blur(100px);
+            animation: hero-breathe 8s ease-in-out infinite;
         }
         
-        .legend-dot.major {
-            background: #FF5722;
-            width: 28px;
-            height: 28px;
+        @keyframes hero-breathe {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
         }
         
-        .legend-dot.future {
-            background: #8B5CF6;
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fade-up 1.5s ease;
         }
         
-        .legend-dot.reflection {
-            background: #10B981;
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .legend-label {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
         
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: var(--text-dim);
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fade-in 1s ease 0.5s forwards;
+        }
+        
+        @keyframes fade-in {
+            to { opacity: 1; }
+        }
+        
+        /* Elegant scroll indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: 3rem;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
-            animation: fadeIn 1s ease 1.2s forwards, float 3s ease-in-out infinite 1.2s;
+            animation: fade-in 1s ease 2s forwards;
             cursor: pointer;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 0.7;
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(10px);
-            }
+            transition: transform 0.3s ease;
         }
         
         .scroll-indicator:hover {
-            opacity: 1 !important;
+            transform: translateX(-50%) translateY(-5px);
         }
         
-        /* Timeline sections */
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid var(--primary-light);
+            border-radius: 13px;
+            position: relative;
+        }
+        
+        .scroll-mouse::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 4px;
+            height: 8px;
+            background: var(--primary-light);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            animation: scroll-down 2s ease infinite;
+        }
+        
+        @keyframes scroll-down {
+            0% { opacity: 0; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+        }
+        
+        /* Enhanced side navigation orbs */
+        .nav-orbs {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            opacity: 0;
+            animation: fade-in 1s ease 2.5s forwards;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Increased from 1rem for more separation */
+        }
+        
+        /* Connecting line with gradient */
+        .nav-orbs::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            bottom: 10px;
+            width: 1px;
+            background: linear-gradient(to bottom, 
+                transparent,
+                rgba(148, 163, 184, 0.2) 15%,
+                rgba(148, 163, 184, 0.3) 50%,
+                rgba(148, 163, 184, 0.2) 85%,
+                transparent
+            );
+            transform: translateX(-50%);
+        }
+        
+        .nav-orb {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 2px solid rgba(148, 163, 184, 0.4);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-orb::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 1.75rem;
+            top: 50%;
+            transform: translateY(-50%) translateX(-10px);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-orb:hover::before {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+        
+        /* Subtle hover effect */
+        .nav-orb:hover:not(.active) {
+            transform: scale(1.3);
+            background: rgba(148, 163, 184, 0.2);
+            border-color: rgba(148, 163, 184, 0.6);
+            box-shadow: 0 0 10px rgba(148, 163, 184, 0.2);
+        }
+        
+        /* Era-specific hover colors - more subtle */
+        .nav-orb-intro:hover:not(.active) { 
+            background: rgba(96, 165, 250, 0.2); 
+            border-color: rgba(96, 165, 250, 0.6);
+        }
+        .nav-orb-ancient:hover:not(.active) { 
+            background: rgba(245, 158, 11, 0.2); 
+            border-color: rgba(245, 158, 11, 0.6);
+        }
+        .nav-orb-birth:hover:not(.active) { 
+            background: rgba(37, 99, 235, 0.2); 
+            border-color: rgba(37, 99, 235, 0.6);
+        }
+        .nav-orb-winter:hover:not(.active) { 
+            background: rgba(100, 116, 139, 0.2); 
+            border-color: rgba(100, 116, 139, 0.6);
+        }
+        .nav-orb-modern:hover:not(.active) { 
+            background: rgba(139, 92, 246, 0.2); 
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+        .nav-orb-deep:hover:not(.active) { 
+            background: rgba(239, 68, 68, 0.2); 
+            border-color: rgba(239, 68, 68, 0.6);
+        }
+        .nav-orb-llm:hover:not(.active) { 
+            background: rgba(16, 185, 129, 0.2); 
+            border-color: rgba(16, 185, 129, 0.6);
+        }
+        .nav-orb-future:hover:not(.active) { 
+            background: rgba(167, 139, 250, 0.2); 
+            border-color: rgba(167, 139, 250, 0.6);
+        }
+        
+        /* Beautiful active states with subtle animations */
+        .nav-orb.active {
+            transform: scale(1.6);
+            animation: gentle-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes gentle-pulse {
+            0%, 100% { 
+                transform: scale(1.6); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.7); 
+                filter: brightness(1.2);
+            }
+        }
+        
+        /* Era-specific active colors */
+        .nav-orb-intro.active { 
+            background: var(--primary-light); 
+            border-color: var(--primary-light);
+            box-shadow: 
+                0 0 20px rgba(96, 165, 250, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-ancient.active { 
+            background: var(--warning); 
+            border-color: var(--warning);
+            box-shadow: 
+                0 0 20px rgba(245, 158, 11, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-birth.active { 
+            background: var(--primary); 
+            border-color: var(--primary);
+            box-shadow: 
+                0 0 20px rgba(37, 99, 235, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-winter.active { 
+            background: var(--text-dimmer); 
+            border-color: var(--text-dimmer);
+            box-shadow: 
+                0 0 20px rgba(100, 116, 139, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-modern.active { 
+            background: var(--accent); 
+            border-color: var(--accent);
+            box-shadow: 
+                0 0 20px rgba(139, 92, 246, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-deep.active { 
+            background: var(--danger); 
+            border-color: var(--danger);
+            box-shadow: 
+                0 0 20px rgba(239, 68, 68, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-llm.active { 
+            background: var(--success); 
+            border-color: var(--success);
+            box-shadow: 
+                0 0 20px rgba(16, 185, 129, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .nav-orb-future.active { 
+            background: var(--accent-light); 
+            border-color: var(--accent-light);
+            box-shadow: 
+                0 0 20px rgba(167, 139, 250, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Subtle ring animation for active state */
+        .nav-orb.active::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border: 1px solid;
+            border-color: inherit;
+            border-radius: 50%;
+            opacity: 0;
+            animation: subtle-ring 3s ease-out infinite;
+        }
+        
+        @keyframes subtle-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+        
+        /* Timeline section - refined */
         .timeline-section {
             position: relative;
-            padding: 80px 0;
-            z-index: 10;
-        }
-        
-        .timeline-container {
+            padding: 10rem 0;
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-            padding: 0 40px;
         }
         
-        /* Timeline line with glow */
         .timeline-line {
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, 
-                transparent 0%, 
-                #2196F3 10%, 
-                #2196F3 90%, 
-                transparent 100%
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                var(--primary-light) 10%,
+                var(--primary-light) 90%,
+                transparent
             );
             transform: translateX(-50%);
         }
         
-        .timeline-line::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(to bottom,
-                transparent 0%,
-                rgba(33, 150, 243, 0.2) 10%,
-                rgba(33, 150, 243, 0.2) 90%,
-                transparent 100%
-            );
-            filter: blur(10px);
-            pointer-events: none;
-        }
-        
-        /* Timeline items with refined animations */
+        /* Timeline items - cleaner */
         .timeline-item {
             position: relative;
-            margin-bottom: 80px;
+            margin-bottom: 6rem;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .timeline-item.visible {
@@ -328,318 +554,649 @@
         }
         
         .timeline-item:nth-child(even) {
-            text-align: right;
             padding-right: 52%;
+            text-align: right;
         }
         
         .timeline-item:nth-child(odd) {
-            text-align: left;
             padding-left: 52%;
         }
         
-        /* Timeline dots with subtle glow animation */
         .timeline-dot {
             position: absolute;
-            width: 24px;
-            height: 24px;
-            background: #2196F3;
-            border: 3px solid #0a0a0a;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border: 3px solid var(--bg-dark);
             border-radius: 50%;
-            top: 5px;
             left: 50%;
+            top: 0;
             transform: translateX(-50%);
             z-index: 2;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 20px rgba(33, 150, 243, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .timeline-dot::after {
             content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-dot::after {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .timeline-dot.major {
+            width: 24px;
+            height: 24px;
+            background: var(--gradient-primary);
+        }
+        
+        /* Timeline content - elegant cards */
+        .timeline-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gradient-primary);
+            border-radius: 1rem;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .timeline-content:hover::before {
+            opacity: 0.1;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(37, 99, 235, 0.1);
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            background: var(--gradient-subtle);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .timeline-description {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+        
+        .timeline-tech {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 2rem;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            color: var(--primary-light);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-tech:hover {
+            background: rgba(37, 99, 235, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* Era separators - cinematic */
+        .era-separator {
+            position: relative;
+            padding: 12rem 0;
+            text-align: center;
+            overflow: visible;
+            perspective: 1000px;
+            --visibility: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Cinematic background */
+        .era-separator::before {
+            content: '';
+            position: absolute;
+            inset: -50px;
+            background: 
+                radial-gradient(ellipse at center, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at center, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+            opacity: calc(var(--visibility) * 1);
+            transition: opacity 0.6s ease;
+            z-index: -1;
+        }
+        
+        /* Title wrapper for proper frame sizing */
+        .era-title-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 2.5rem clamp(2rem, 5vw, 4rem);
+            min-width: min(300px, 80vw);
+            max-width: 90vw;
+            transform: scale(calc(0.8 + var(--visibility) * 0.2));
+            transition: transform 0.6s ease;
+        }
+        
+        /* Smooth wrapper transition during navigation */
+        body[data-navigating="true"] .era-title-wrapper {
+            transition: transform 0.8s ease !important;
+        }
+        
+        /* Decorative geometric frame - dynamically sized */
+        .era-frame {
+            position: absolute;
+            inset: 0;
+            opacity: calc(var(--visibility) * 0.3);
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+        
+        /* Enhanced visibility when fully visible */
+        .era-separator.visible .era-frame {
+            opacity: 0.4;
+        }
+        
+        /* Smoother frame during navigation */
+        body[data-navigating="true"] .era-frame {
+            transition: opacity 0.8s ease !important;
+        }
+        
+        body[data-navigating="true"] .era-frame::before {
+            animation-play-state: paused;
+        }
+        
+        body[data-navigating="true"] .era-frame::after {
+            animation-play-state: paused;
+        }
+        
+        .era-frame::before,
+        .era-frame::after {
+            content: '';
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        
+        .era-frame::before {
+            inset: 0;
+            border-radius: 30px;
+            border: 1px solid var(--primary-light);
+            background: 
+                radial-gradient(ellipse at center, rgba(37, 99, 235, 0.15) 0%, transparent 70%),
+                linear-gradient(135deg, transparent 20%, rgba(37, 99, 235, 0.08) 50%, transparent 80%),
+                rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px) saturate(120%);
+            box-shadow: 
+                inset 0 0 40px rgba(37, 99, 235, 0.2),
+                inset 0 2px 20px rgba(255, 255, 255, 0.1),
+                0 0 60px rgba(37, 99, 235, 0.1);
+            animation: frame-pulse 4s ease-in-out infinite;
+        }
+        
+        .era-frame::after {
+            top: -5%;
+            left: -3%;
+            right: -3%;
+            bottom: -5%;
+            border-radius: 40px;
+            border: 1px dashed rgba(59, 130, 246, 0.3);
+            opacity: 0.5;
+            animation: frame-rotate 20s linear infinite;
+        }
+        
+        @keyframes frame-pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% {
+                transform: scale(1.02);
+                filter: brightness(1.1);
+            }
+        }
+        
+        @keyframes frame-rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Cinematic title with split-text animation */
+        .era-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            position: relative;
+            z-index: 2;
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            line-height: 1.3;
+            word-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            text-align: center;
+        }
+        
+        /* Allow wrap on smaller screens */
+        @media (max-width: 768px) {
+            .era-title {
+                white-space: normal;
+                line-height: 1.2;
+            }
+        }
+        
+
+        
+        /* Character animation with visibility-based transform */
+        .era-title .char {
+            display: inline-block;
+            opacity: calc(var(--visibility) * 1);
+            transform: 
+                translateY(calc((1 - var(--visibility)) * 50px)) 
+                rotateY(calc((1 - var(--visibility)) * -90deg))
+                scale(calc(0.8 + var(--visibility) * 0.2));
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            transition-delay: calc(var(--char-index) * 0.02s);
+            background: linear-gradient(
+                to bottom,
+                var(--text) 0%,
+                var(--primary-light) 50%,
+                var(--text) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 100% 200%;
+        }
+        
+        /* Smooth animation when navigating via orbs */
+        body[data-navigating="true"] .era-title .char {
+            transition-delay: 0s !important;
+            transition-duration: 0.6s;
+        }
+        
+        /* Ensure line breaks don't interfere with animation */
+        .era-title br {
+            display: block;
+            content: '';
+            margin: 0;
+            padding: 0;
+            line-height: 1.3;
+        }
+        
+        /* Reverse stagger when scrolling up */
+        body[data-scroll-direction="up"] .era-title .char {
+            transition-delay: calc((20 - var(--char-index)) * 0.01s);
+        }
+        
+        /* Additional hiding state for smoother exit */
+        .era-separator.hiding .era-title .char {
+            transition-delay: calc((10 - var(--char-index)) * 0.01s);
+            transition-duration: 0.3s;
+        }
+        
+        .era-separator.visible .era-title .char {
+            opacity: 1;
+            transform: translateY(0) rotateY(0) scale(1);
+            animation: text-shimmer 3s ease-in-out infinite;
+        }
+        
+        /* Clean reveal during navigation */
+        body[data-navigating="true"] .era-separator.visible .era-title .char {
+            animation: none;
+        }
+        
+        @keyframes text-shimmer {
+            0%, 100% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 0% 100%;
+            }
+        }
+        
+        /* Decorative lines that expand from center */
+        .era-lines {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            background: inherit;
-            animation: pulse 2s ease-in-out infinite;
-            z-index: -1;
+            pointer-events: none;
         }
         
-        @keyframes pulse {
+        .era-line {
+            position: absolute;
+            top: 50%;
+            height: 1px;
+            background: linear-gradient(to var(--direction), transparent, var(--primary-light), transparent);
+            opacity: calc(var(--visibility) * 0.5);
+            width: calc(var(--visibility) * 40%);
+            transition: all 0.8s ease;
+        }
+        
+        .era-line.left {
+            --direction: right;
+            right: 50%;
+            transform-origin: right center;
+        }
+        
+        .era-line.right {
+            --direction: left;
+            left: 50%;
+            transform-origin: left center;
+        }
+        
+        /* Smooth line expansion during navigation */
+        body[data-navigating="true"] .era-line {
+            transition: all 0.8s ease !important;
+        }
+        
+        /* Subtle floating particles around title */
+        .era-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        
+        .era-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: calc(var(--visibility) * 0.6);
+            transform: 
+                translateY(calc((1 - var(--visibility)) * 20px))
+                scale(var(--visibility));
+            transition: all 0.6s ease;
+            transition-delay: calc(var(--particle-index) * 0.05s);
+        }
+        
+        /* Smooth particles during navigation */
+        body[data-navigating="true"] .era-particle {
+            transition-delay: 0s !important;
+            transition-duration: 0.8s !important;
+        }
+        
+        /* Particle float animation only when visible */
+        .era-separator.visible .era-particle {
+            animation: particle-gentle-float 4s ease-in-out infinite;
+            animation-delay: calc(var(--particle-index) * 0.5s);
+        }
+        
+        /* Disable particle animation during navigation */
+        body[data-navigating="true"] .era-particle {
+            animation: none !important;
+        }
+        
+        @keyframes particle-gentle-float {
             0%, 100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.5;
+                transform: translateY(0) scale(1);
             }
             50% {
-                transform: translate(-50%, -50%) scale(1.5);
-                opacity: 0;
+                transform: translateY(-10px) scale(1.1);
             }
         }
         
-        .timeline-item:hover .timeline-dot {
-            transform: translateX(-50%) scale(1.2);
-            box-shadow: 0 0 30px rgba(33, 150, 243, 0.6);
+        /* Era separator hover effects */
+        .era-separator:hover .era-frame::before {
+            background: linear-gradient(135deg, transparent 20%, rgba(37, 99, 235, 0.1) 50%, transparent 80%);
+            transform: scale(1.05);
+            transition: all 0.5s ease;
         }
         
-        .timeline-dot.major {
-            width: 32px;
-            height: 32px;
-            background: #FF5722;
-            box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
+        /* Disable hover transform during navigation */
+        body[data-navigating="true"] .era-separator:hover .era-frame::before {
+            transform: scale(1);
         }
         
-        /* Content cards with refined hover */
-        .timeline-content {
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 28px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .era-separator:hover .era-title .char {
+            animation: text-glow 0.5s ease forwards;
+            animation-delay: calc(var(--char-index) * 0.02s);
+        }
+        
+        /* Disable hover effects during navigation */
+        body[data-navigating="true"] .era-separator:hover .era-title .char {
+            animation: none;
+        }
+        
+        @keyframes text-glow {
+            to {
+                text-shadow: 
+                    0 0 20px rgba(37, 99, 235, 0.5),
+                    0 0 40px rgba(37, 99, 235, 0.3),
+                    0 0 60px rgba(37, 99, 235, 0.1);
+            }
+        }
+        
+        /* Footer - clean */
+        .footer {
+            text-align: center;
+            padding: 6rem 2rem 3rem;
             position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
         
-        .timeline-content::before {
+        .footer::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.5), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
+            background: linear-gradient(to right, transparent, var(--primary-light), transparent);
         }
         
-        .timeline-content:hover::before {
-            transform: translateX(100%);
+        .footer-text {
+            font-size: 1.125rem;
+            color: var(--text-dim);
+            font-weight: 300;
         }
         
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                0 0 60px rgba(33, 150, 243, 0.05);
-            border-color: rgba(33, 150, 243, 0.2);
-        }
-        
-        /* Date badges with glow */
-        .timeline-date {
-            display: inline-block;
-            background: rgba(26, 26, 26, 0.9);
-            color: #64B5F6;
-            padding: 8px 18px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 15px;
-            border: 1px solid #2196F3;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
-        }
-        
-        .timeline-date.future {
-            border-color: #8B5CF6;
-            color: #8B5CF6;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-        }
-        
-        .timeline-date.reflection {
-            border-color: #10B981;
-            color: #10B981;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-        }
-        
-        .timeline-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #ffffff;
-            line-height: 1.3;
-        }
-        
-        .timeline-description {
-            color: rgba(255, 255, 255, 0.75);
-            line-height: 1.8;
-            font-size: 15px;
-        }
-        
-        .timeline-tech {
-            margin-top: 15px;
-            font-size: 13px;
-            color: #64B5F6;
-            font-style: italic;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            opacity: 0.9;
-        }
-        
-        /* Era separators with refined design */
-        .era-separator {
-            position: relative;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 100px 0;
-        }
-        
-        .era-separator::before {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(33, 150, 243, 0.3), 
-                rgba(33, 150, 243, 0.5),
-                rgba(33, 150, 243, 0.3),
-                transparent
-            );
-        }
-        
-        .era-title {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 600;
-            text-align: center;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 20, 0.95));
-            backdrop-filter: blur(10px);
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            border-radius: 50px;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .era-title::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, #2196F3, #FF5722);
-            border-radius: 50px;
-            z-index: -1;
-            opacity: 0.7;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 100px 20px 60px;
-            color: #64B5F6;
-            font-size: 1.2em;
-            position: relative;
-            opacity: 0.8;
-        }
-        
-        /* Responsive adjustments */
+        /* Responsive refinements */
         @media (max-width: 768px) {
-            .legend {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px 25px;
+            .nav-orbs {
+                display: none;
+            }
+            
+            .timeline-line {
+                left: 2rem;
             }
             
             .timeline-item:nth-child(even),
             .timeline-item:nth-child(odd) {
-                padding: 0 20px 0 60px;
+                padding-left: 4rem;
+                padding-right: 2rem;
                 text-align: left;
             }
             
-            .timeline-line {
-                left: 30px;
-            }
-            
             .timeline-dot {
-                left: 30px;
+                left: 2rem;
             }
             
-            .timeline-content {
-                padding: 20px;
+            .era-title-wrapper {
+                padding: 2rem 1.5rem;
+                max-width: 90%;
+            }
+            
+            .era-frame::after {
+                top: -8px;
+                left: -8px;
+                right: -8px;
+                bottom: -8px;
+                border-radius: 25px;
+            }
+            
+            .era-frame::before {
+                border-radius: 20px;
+            }
+            
+            .era-lines {
+                display: none;
+            }
+            
+            .era-title {
+                font-size: clamp(1.75rem, 7vw, 2.5rem);
+                letter-spacing: 0.1em;
+                white-space: normal;
+                line-height: 1.2;
+            }
+            
+            .era-title .char {
+                transition-duration: 0.3s;
             }
         }
         
-        /* Reduced motion preferences */
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .era-title-wrapper {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .era-title {
+                font-size: clamp(1.25rem, 5vw, 2rem);
+                letter-spacing: 0.05em;
+            }
+        }
+        
+        /* Performance optimizations */
         @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: opacity 0.3s ease !important;
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Subtle animated background -->
-    <div class="background-gradient"></div>
-    
-    <!-- Floating orbs for ambiance -->
-    <div class="orbs">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-    </div>
-    
-    <!-- Hero Section with Legend -->
-    <div class="hero">
-        <h1>The Evolution of AI</h1>
-        <p class="hero-subtitle">From Ancient Logic to Modern Intelligence</p>
-        <p class="hero-subtitle">2,400 Years of Human Ingenuity</p>
-        
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-dot regular"></div>
-                <span class="legend-label">Key Development</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-dot major"></div>
-                <span class="legend-label">Major Breakthrough</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-dot future"></div>
-                <span class="legend-label">Future Outlook</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-dot reflection"></div>
-                <span class="legend-label">Reflection</span>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">
-            <svg width="30" height="30" viewBox="0 0 30 30">
-                <path d="M15 8 L15 22 M9 16 L15 22 L21 16" stroke="#64B5F6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p style="color: var(--text-dim); font-size: 1.125rem;">Initializing Timeline...</p>
         </div>
     </div>
-    
+
+    <!-- Progress bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Neural network background (canvas) -->
+    <div class="neural-bg" id="neuralBg"></div>
+
+    <!-- Floating particles -->
+    <div class="particle-field" id="particleField"></div>
+
+    <!-- Navigation orbs -->
+    <nav class="nav-orbs">
+        <div class="nav-orb nav-orb-intro" data-label="Introduction" data-target="intro"></div>
+        <div class="nav-orb nav-orb-ancient" data-label="Ancient Foundations" data-target="ancient"></div>
+        <div class="nav-orb nav-orb-birth" data-label="Birth of AI" data-target="birth"></div>
+        <div class="nav-orb nav-orb-winter" data-label="AI Winter & Revival" data-target="winter"></div>
+        <div class="nav-orb nav-orb-modern" data-label="Rise of Modern AI" data-target="modern"></div>
+        <div class="nav-orb nav-orb-deep" data-label="Deep Learning Revolution" data-target="deep"></div>
+        <div class="nav-orb nav-orb-llm" data-label="Era of LLMs" data-target="llm"></div>
+        <div class="nav-orb nav-orb-future" data-label="Present & Future" data-target="future"></div>
+    </nav>
+
+    <!-- Hero section -->
+    <header class="hero" id="intro">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="hero-content">
+            <h1>The Evolution of AI</h1>
+            <p class="hero-subtitle">From Ancient Logic to Modern Intelligence</p>
+            <p class="hero-subtitle">2,400 Years of Human Ambition</p>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToTimeline()">
+            <div class="scroll-mouse"></div>
+        </div>
+    </header>
+
+    <!-- Timeline section -->
+    <main class="timeline-section">
+        <div class="timeline-line"></div>
+
+        <!-- Era Separator - Cinematic Title Reveal
+             Each era separator includes:
+             - era-lines: Expanding horizontal lines
+             - era-particles: Floating accent particles
+             - era-title-wrapper: Container for title and frame
+               - era-frame: Decorative geometric background that fits text
+               - era-title: The main title with character-by-character animation
+             
+             For manual line breaks in titles, use <br> tags where you want breaks.
+             Example: <h2 class="era-title">First Line<br>Second Line</h2>
+        -->
     <!-- Ancient Foundations Era -->
-    <div class="era-separator">
-        <h2 class="era-title">Ancient Foundations to Early Computing</h2>
+    <div class="era-separator" id="ancient">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">Ancient Foundations</h2>
+        </div>
     </div>
-    
-    <section class="timeline-section">
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">384 BCE</span>
-                    <h3 class="timeline-title">Aristotle's Formal Logic</h3>
-                    <p class="timeline-description">
-                        "A single assertion must always either affirm or deny a single predicate of a single subject." 
-                        Aristotle establishes formal reasoning and syllogistic logic, creating the binary foundation that would eventually underpin all digital computing.
-                    </p>
-                    <div class="timeline-tech">Contribution: Binary logic, formal reasoning systems</div>
-                </div>
-            </div>
             
             <div class="timeline-item">
                 <div class="timeline-dot"></div>
@@ -792,183 +1349,24 @@
         </div>
     </section>
     
-    <!-- Current State and Future -->
-    <div class="era-separator">
-        <h2 class="era-title">Current State and Future of AI</h2>
-    </div>
-    
-    <section class="timeline-section">
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Claude Opus 4</h3>
-                    <p class="timeline-description">
-                        Current state-of-the-art with 72.5% on SWE-bench. Features hybrid reasoning with 64K thinking tokens, 
-                        capable of 7+ hours autonomous coding. Represents culmination of 2,400 years of progress 
-                        from Aristotle's logic to modern AI.
-                    </p>
-                    <div class="timeline-tech">Capabilities: Extended reasoning, multimodal understanding, code generation</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Meta Llama 4</h3>
-                    <p class="timeline-description">
-                        First open-weight natively multimodal models with mixture-of-experts architecture, 
-                        challenging closed-source model dominance and advancing open AI development.
-                    </p>
-                    <div class="timeline-tech">Innovation: Open multimodal foundation models</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Current Landscape</h3>
-                    <p class="timeline-description">
-                        Thousands of models from numerous companies: Google's Gemini, Meta's LLaMA 3, 
-                        Anthropic's Claude, OpenAI's GPT series, Mistral, DeepSeek, Qwen, and many others. 
-                        AI integration becoming ubiquitous in software.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Global AI Innovation</h3>
-                    <p class="timeline-description">
-                        • China: Baidu ERNIE Bot serves 200M users<br>
-                        • Israel: 2,170 AI companies (30% of tech sector)<br>
-                        • Canada: Vector Institute and Mila lead research<br>
-                        • South Korea: Exaone 3.0 open-source LLM<br>
-                        • Europe: Leading AI regulation and ethics<br>
-                        • Japan: Society 5.0 integrating AI with robotics<br>
-                        • Latin America: Chile's Latam-GPT project
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Technical Innovations</h3>
-                    <p class="timeline-description">
-                        • Efficient architectures: Mamba, RWKV challenging transformers<br>
-                        • Mixture of Experts for scale<br>
-                        • Flash Attention for memory efficiency<br>
-                        • LoRA/QLoRA for efficient fine-tuning<br>
-                        • RAG for knowledge integration<br>
-                        • Native multimodality in foundation models
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">AI in Production</h3>
-                    <p class="timeline-description">
-                        • 750,000+ robots in Amazon warehouses<br>
-                        • Robo-advisors managing $4.66 trillion projected by 2027<br>
-                        • AI agents handling customer service at scale<br>
-                        • Autonomous coding assistants in development teams<br>
-                        • AI-powered drug discovery accelerating
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Current Challenges</h3>
-                    <p class="timeline-description">
-                        • Hallucination and reliability<br>
-                        • Computational costs and energy usage<br>
-                        • AI safety and alignment<br>
-                        • Corporate responsibility<br>
-                        • Democratization vs. concentration of power<br>
-                        • Global governance and regulation
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Rapid Evolution</h3>
-                    <p class="timeline-description">
-                        Field changes so rapidly that long-term frameworks become obsolete quickly. 
-                        Platforms like GitHub, HuggingFace, and Leanpub enable real-time knowledge sharing. 
-                        Open-source community driving innovation alongside big tech.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date future">Future</span>
-                    <h3 class="timeline-title">The Road Ahead</h3>
-                    <p class="timeline-description">
-                        From Aristotle's binary logic to Claude Opus 4's extended reasoning, 
-                        AI represents humanity's longest intellectual project. The journey continues with:<br><br>
-                        • AGI aspirations (Shane Legg: 50% chance by 2028)<br>
-                        • Multimodal reasoning<br>
-                        • Embodied AI and robotics<br>
-                        • Quantum-AI integration<br>
-                        • Ensuring beneficial outcomes for humanity
-                    </p>
-                    <div class="timeline-tech">Key: Balancing capability with safety and accessibility</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date reflection">Reflection</span>
-                    <h3 class="timeline-title">2,400 Years of Progress</h3>
-                    <p class="timeline-description">
-                        What began with philosophers asking "What is thought?" has evolved into systems 
-                        that can write, create, reason, and assist. Each breakthrough built on centuries 
-                        of accumulated knowledge, showing AI as not a sudden invention but humanity's 
-                        longest quest to understand and recreate intelligence.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date reflection">Reflection</span>
-                    <h3 class="timeline-title">You Were Here</h3>
-                    <p class="timeline-description">
-                        Reader finishes browsing this timeline, brain slightly dizzy from the scope of human ambition. 
-                        Returns to main text with newfound appreciation for how a thought experiment in ancient Greece 
-                        somehow led to an AI that can help write books about itself. 
-                        The loop closes. The story continues.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <!-- Birth of AI Era -->
-    <div class="era-separator">
-        <h2 class="era-title">The Birth of Artificial Intelligence</h2>
+    <div class="era-separator" id="birth">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">The Birth of Artificial Intelligence</h2>
+        </div>
     </div>
     
     <section class="timeline-section">
@@ -1326,8 +1724,23 @@
     </section>
     
     <!-- AI Winter and Revival Era -->
-    <div class="era-separator">
-        <h2 class="era-title">AI Winter and Neural Network Revival</h2>
+    <div class="era-separator" id="winter">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">AI Winter and Neural Network Revival</h2>
+        </div>
     </div>
     
     <section class="timeline-section">
@@ -1738,8 +2151,23 @@
     </section>
     
     <!-- Rise of Modern AI Era -->
-    <div class="era-separator">
-        <h2 class="era-title">The Rise of Modern AI</h2>
+    <div class="era-separator" id="modern">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">The Rise of Modern AI</h2>
+        </div>
     </div>
     
     <section class="timeline-section">
@@ -2107,8 +2535,23 @@
     </section>
     
     <!-- Deep Learning Revolution Era -->
-    <div class="era-separator">
-        <h2 class="era-title">The Deep Learning Revolution</h2>
+    <div class="era-separator" id="deep">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">The Deep Learning Revolution</h2>
+        </div>
     </div>
     
     <section class="timeline-section">
@@ -2608,9 +3051,24 @@
         </div>
     </section>
     
-    <!-- Era of Large Models -->
-    <div class="era-separator">
-        <h2 class="era-title">The Era of Large Language Models</h2>
+    <!-- Era of Large Language Models -->
+    <div class="era-separator" id="llm">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">The Era of Large Language Models</h2>
+        </div>
     </div>
     
     <section class="timeline-section">
@@ -2921,3 +3379,1011 @@
                         Demonstrates that alignment matters more than scale.
                     </p>
                     <div class="timeline-tech">Breakthrough: Human feedback improves AI behavior</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Chinchilla Scaling Laws</h3>
+                    <p class="timeline-description">
+                        DeepMind publishes "compute-optimal" training showing models need ~20 tokens per parameter. 
+                        70B Chinchilla outperforms much larger models, revolutionizing training efficiency.
+                    </p>
+                    <div class="timeline-tech">Impact: Changed how all LLMs are trained</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Flash Attention</h3>
+                    <p class="timeline-description">
+                        Dao et al. introduce IO-aware exact attention algorithm, reducing memory usage 
+                        from quadratic to linear and enabling much longer context windows efficiently.
+                    </p>
+                    <div class="timeline-tech">Impact: Enabled 100K+ token context windows</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Midjourney Beta Launch</h3>
+                    <p class="timeline-description">
+                        David Holz releases Midjourney, becoming cultural phenomenon with artistic, 
+                        dreamlike image generation. Operates entirely through Discord, reaching millions.
+                    </p>
+                    <div class="timeline-tech">Impact: Made AI art mainstream and accessible</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Stable Diffusion</h3>
+                    <p class="timeline-description">
+                        Stability AI releases open-source text-to-image diffusion model. 
+                        Democratizes AI art generation, sparking creative revolution and controversy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">OpenAI Whisper Released</h3>
+                    <p class="timeline-description">
+                        Open-source speech recognition trained on 680,000 hours of multilingual audio. 
+                        Supports 99 languages with near-human accuracy, democratizing speech AI.
+                    </p>
+                    <div class="timeline-tech">Models: Six sizes from 39M to 1.5B parameters</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">Instant Neural Graphics Primitives</h3>
+                    <p class="timeline-description">
+                        NVIDIA introduces Instant NGP, achieving real-time neural radiance field (NeRF) rendering. 
+                        Reduces training time from hours to seconds using multi-resolution hash encoding, 
+                        enabling instant 3D scene reconstruction from 2D images.
+                    </p>
+                    <div class="timeline-tech">Breakthrough: Real-time neural 3D rendering</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">LangChain Framework</h3>
+                    <p class="timeline-description">
+                        Harrison Chase releases LangChain, enabling complex LLM applications with 
+                        chains, agents, and tools. Accelerates development of AI-powered applications.
+                    </p>
+                    <div class="timeline-tech">Impact: Simplified building LLM applications</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">ChatGPT Launch</h3>
+                    <p class="timeline-description">
+                        OpenAI releases ChatGPT on November 30, reaching 100M users in 2 months - fastest in history. 
+                        Brings conversational AI to mainstream, triggering global AI awareness and investment boom.
+                    </p>
+                    <div class="timeline-tech">Impact: AI becomes household technology</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">AlphaFold Database Release</h3>
+                    <p class="timeline-description">
+                        DeepMind releases structures for 200 million proteins - nearly all known to science. 
+                        Makes decades of potential research freely available overnight.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2022</span>
+                    <h3 class="timeline-title">ElevenLabs Voice Cloning</h3>
+                    <p class="timeline-description">
+                        Founded by Piotr Dąbkowski and Mati Staniszewski, beta launches January 2023. 
+                        Achieves realistic voice cloning from just 5-30 seconds of audio, revolutionizing voice synthesis.
+                    </p>
+                    <div class="timeline-tech">Valuation: $3.3B by 2025, raises ethics concerns</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Auto-GPT Launches Autonomous AI Era</h3>
+                    <p class="timeline-description">
+                        Toran Bruce Richards releases Auto-GPT on March 30, gaining 177,000+ GitHub stars. 
+                        First autonomous AI agent that can break down tasks and execute them independently. 
+                        AgentGPT follows in April.
+                    </p>
+                    <div class="timeline-tech">Significance: Early AGI experiments highlight potential and limitations</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Constitutional AI</h3>
+                    <p class="timeline-description">
+                        Anthropic develops training method using AI feedback based on constitutional principles 
+                        rather than extensive human feedback. Enables more precise control.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Meta's Segment Anything Model</h3>
+                    <p class="timeline-description">
+                        Released April 5 with SA-1B dataset containing 1.1 billion masks. 
+                        Enables zero-shot segmentation with flexible prompting (clicks, boxes, text). 
+                        Establishes computer vision foundation models.
+                    </p>
+                    <div class="timeline-tech">Team Lead: Alexander Kirillov at Meta AI</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">LlamaIndex (GPT Index) Matures</h3>
+                    <p class="timeline-description">
+                        Jerry Liu's LlamaIndex becomes essential for connecting LLMs to private data, 
+                        complementing LangChain with focus on data ingestion and retrieval.
+                    </p>
+                    <div class="timeline-tech">Innovation: Advanced RAG techniques</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">LIDA - Automated Data Visualization</h3>
+                    <p class="timeline-description">
+                        Microsoft Research releases LIDA (Language-based Interactive Data Analysis), 
+                        combining LLMs with visualization generation. Automatically creates meaningful 
+                        charts and insights from natural language queries about data.
+                    </p>
+                    <div class="timeline-tech">Innovation: LLM-powered automated analytics</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Claude 1 Launch</h3>
+                    <p class="timeline-description">
+                        Anthropic releases Claude with 9,000 token context and strong conversational abilities. 
+                        Emphasizes safety and helpfulness through Constitutional AI training.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">GPT-4</h3>
+                    <p class="timeline-description">
+                        OpenAI's multimodal model with estimated 500B-1.7T parameters. 
+                        Shows significant improvements in reasoning and reduced hallucination.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Mixtral 8x7B</h3>
+                    <p class="timeline-description">
+                        Mistral AI releases open-source Mixture of Experts model, achieving GPT-3.5 
+                        performance with efficient sparse activation. Democratizes advanced architectures.
+                    </p>
+                    <div class="timeline-tech">Innovation: Open MoE models become viable</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Video Generation Explosion</h3>
+                    <p class="timeline-description">
+                        Runway Gen-2, Pika Labs, and Stability AI's SVD democratize video generation. 
+                        Text-to-video becomes accessible to creators, transforming content production.
+                    </p>
+                    <div class="timeline-tech">Impact: AI enters video production mainstream</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Open Source Explosion</h3>
+                    <p class="timeline-description">
+                        Meta's LLaMA leak sparks open-source revolution. 
+                        Mistral, Falcon, MPT, Microsoft Phi, Google Gemma, Cohere Command R, 
+                        and dozens of models democratize LLM access.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">FDA Approves 700+ AI Medical Devices</h3>
+                    <p class="timeline-description">
+                        Over 700 AI algorithms approved for medical use, with 76% in radiology. 
+                        AI becomes standard in medical imaging and diagnostics.
+                    </p>
+                    <div class="timeline-tech">Applications: Cancer detection, cardiac analysis, stroke diagnosis</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Google NotebookLM</h3>
+                    <p class="timeline-description">
+                        Steven Johnson leads development of AI research assistant that can analyze documents 
+                        and generate podcast-style audio discussions, pioneering multimodal knowledge synthesis.
+                    </p>
+                    <div class="timeline-tech">Innovation: AI-generated educational podcasts</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Sora by OpenAI</h3>
+                    <p class="timeline-description">
+                        OpenAI unveils Sora, generating cinema-quality minute-long videos from text. 
+                        Demonstrates understanding of physics, persistence, and complex scene dynamics.
+                    </p>
+                    <div class="timeline-tech">Breakthrough: Photorealistic video with coherent physics</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Claude 3 Family</h3>
+                    <p class="timeline-description">
+                        Anthropic releases Opus, Sonnet, and Haiku models with multimodal capabilities 
+                        and 200,000 token context windows.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">India's AI Mission Launches</h3>
+                    <p class="timeline-description">
+                        IndiaAI Mission approved March 7 with Rs 10,370 crore budget. 
+                        Jugalbandi supports 50+ Indian languages, demonstrating AI for linguistic diversity.
+                    </p>
+                    <div class="timeline-tech">Focus: Inclusive AI development</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Groq LPU - Ultra-Fast Inference</h3>
+                    <p class="timeline-description">
+                        Groq's Language Processing Units achieve 500+ tokens/second inference speed, 
+                        10x faster than GPUs. Demonstrates potential for real-time AI applications.
+                    </p>
+                    <div class="timeline-tech">Innovation: Specialized AI inference hardware</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">African Union AI Strategy</h3>
+                    <p class="timeline-description">
+                        Continental AI Strategy endorsed July 2024. Eight African nations have strategies, 
+                        with focus on language preservation and local solutions. Mauritius first in 2018.
+                    </p>
+                    <div class="timeline-tech">Priority: African language AI models</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">EU AI Act Enters Force</h3>
+                    <p class="timeline-description">
+                        World's first comprehensive AI regulation formally adopted in May, enters force August. 
+                        Sets global precedent for AI governance with risk-based approach.
+                    </p>
+                    <div class="timeline-tech">Impact: Shapes global AI regulation standards</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Humanoid Robot Renaissance</h3>
+                    <p class="timeline-description">
+                        Tesla Optimus, Figure 01, 1X Technologies, and others showcase advanced humanoid robots. 
+                        Figure raises $675M with OpenAI backing, signaling serious commercialization push.
+                    </p>
+                    <div class="timeline-tech">Goal: General-purpose robots for human environments</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">Claude Computer Use</h3>
+                    <p class="timeline-description">
+                        Anthropic introduces AI that can directly control computers, 
+                        marking shift from text generation to autonomous action.
+                    </p>
+                    <div class="timeline-tech">Capability: AI as autonomous agent</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">OpenAI o1 and o3 Models</h3>
+                    <p class="timeline-description">
+                        OpenAI shifts from pure generation to deliberate reasoning with o-series models, 
+                        showing significant improvements in mathematical and logical reasoning.
+                    </p>
+                    <div class="timeline-tech">Innovation: Chain-of-thought reasoning at scale</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024</span>
+                    <h3 class="timeline-title">DeepSeek Open Models</h3>
+                    <p class="timeline-description">
+                        Chinese company DeepSeek releases models achieving GPT-4 level performance 
+                        at fraction of training cost, challenging assumptions about compute requirements.
+                    </p>
+                    <div class="timeline-tech">Significance: Democratizes advanced AI globally</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Current State and Future Era -->
+    <div class="era-separator" id="future">
+        <div class="era-lines">
+            <div class="era-line left"></div>
+            <div class="era-line right"></div>
+        </div>
+        <div class="era-particles">
+            <div class="era-particle" style="--particle-index: 0; left: 20%; top: 30%;"></div>
+            <div class="era-particle" style="--particle-index: 1; left: 80%; top: 25%;"></div>
+            <div class="era-particle" style="--particle-index: 2; left: 15%; top: 70%;"></div>
+            <div class="era-particle" style="--particle-index: 3; left: 85%; top: 65%;"></div>
+            <div class="era-particle" style="--particle-index: 4; left: 50%; top: 20%;"></div>
+            <div class="era-particle" style="--particle-index: 5; left: 45%; top: 80%;"></div>
+        </div>
+        <div class="era-title-wrapper">
+            <div class="era-frame"></div>
+            <h2 class="era-title">Current State and Future of AI</h2>
+        </div>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Claude Opus 4</h3>
+                    <p class="timeline-description">
+                        Current state-of-the-art with 72.5% on SWE-bench. Features hybrid reasoning with 64K thinking tokens, 
+                        capable of 7+ hours autonomous coding. Represents culmination of 2,400 years of progress 
+                        from Aristotle's logic to modern AI.
+                    </p>
+                    <div class="timeline-tech">Capabilities: Extended reasoning, multimodal understanding, code generation</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Meta Llama 4</h3>
+                    <p class="timeline-description">
+                        First open-weight natively multimodal models with mixture-of-experts architecture, 
+                        challenging closed-source model dominance and advancing open AI development.
+                    </p>
+                    <div class="timeline-tech">Innovation: Open multimodal foundation models</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Landscape</h3>
+                    <p class="timeline-description">
+                        Thousands of models from numerous companies: Google's Gemini, Meta's LLaMA 3, 
+                        Anthropic's Claude, OpenAI's GPT series, Mistral, DeepSeek, Qwen, and many others. 
+                        AI integration becoming ubiquitous in software.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Global AI Innovation</h3>
+                    <p class="timeline-description">
+                        • China: Baidu ERNIE Bot serves 200M users<br>
+                        • Israel: 2,170 AI companies (30% of tech sector)<br>
+                        • Canada: Vector Institute and Mila lead research<br>
+                        • South Korea: Exaone 3.0 open-source LLM<br>
+                        • Europe: Leading AI regulation and ethics<br>
+                        • Japan: Society 5.0 integrating AI with robotics<br>
+                        • Latin America: Chile's Latam-GPT project
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Technical Innovations</h3>
+                    <p class="timeline-description">
+                        • Efficient architectures: Mamba, RWKV challenging transformers<br>
+                        • Mixture of Experts for scale<br>
+                        • Flash Attention for memory efficiency<br>
+                        • LoRA/QLoRA for efficient fine-tuning<br>
+                        • RAG for knowledge integration<br>
+                        • Native multimodality in foundation models
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">AI in Production</h3>
+                    <p class="timeline-description">
+                        • 750,000+ robots in Amazon warehouses<br>
+                        • Robo-advisors managing $4.66 trillion projected by 2027<br>
+                        • AI agents handling customer service at scale<br>
+                        • Autonomous coding assistants in development teams<br>
+                        • AI-powered drug discovery accelerating
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Challenges</h3>
+                    <p class="timeline-description">
+                        • Hallucination and reliability<br>
+                        • Computational costs and energy usage<br>
+                        • AI safety and alignment<br>
+                        • Corporate responsibility<br>
+                        • Democratization vs. concentration of power<br>
+                        • Global governance and regulation
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Rapid Evolution</h3>
+                    <p class="timeline-description">
+                        Field changes so rapidly that long-term frameworks become obsolete quickly. 
+                        Platforms like GitHub, HuggingFace, and Leanpub enable real-time knowledge sharing. 
+                        Open-source community driving innovation alongside big tech.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date future">Future</span>
+                    <h3 class="timeline-title">The Road Ahead</h3>
+                    <p class="timeline-description">
+                        From Aristotle's binary logic to Claude Opus 4's extended reasoning, 
+                        AI represents humanity's longest intellectual project. The journey continues with:<br><br>
+                        • AGI aspirations (Shane Legg: 50% chance by 2028)<br>
+                        • Multimodal reasoning<br>
+                        • Embodied AI and robotics<br>
+                        • Quantum-AI integration<br>
+                        • Ensuring beneficial outcomes for humanity
+                    </p>
+                    <div class="timeline-tech">Key: Balancing capability with safety and accessibility</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date reflection">Reflection</span>
+                    <h3 class="timeline-title">2,400 Years of Progress</h3>
+                    <p class="timeline-description">
+                        What began with philosophers asking "What is thought?" has evolved into systems 
+                        that can write, create, reason, and assist. Each breakthrough built on centuries 
+                        of accumulated knowledge, showing AI as not a sudden invention but humanity's 
+                        longest quest to understand and recreate intelligence.
+                    </p>
+                <div class="timeline-content">
+                    <span class="timeline-date reflection">Reflection</span>
+                    <h3 class="timeline-title">You Were Here</h3>
+                    <p class="timeline-description">
+                        Reader finishes browsing this timeline, brain slightly dizzy from the scope of human ambition. 
+            Returns to main text with newfound appreciation for how a thought experiment in ancient Greece 
+            somehow led to an AI that can help write books about itself. 
+            The loop closes. The story continues.
+                    </p>
+                </div>
+            </div>
+                    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">The journey continues...</p>
+    </footer>
+
+    <script>
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeApp();
+        });
+
+        // Easing function for smooth animations
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function initializeApp() {
+            // Remove loading overlay
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1500);
+
+            // Setup all features
+            setupNeuralNetwork();
+            setupParticles();
+            setupScrollProgress();
+            setupSplitText();
+            setupIntersectionObserver();
+            setupNavigation();
+            setupSmoothScroll();
+        }
+
+        // Split text for cinematic animation with support for manual line breaks
+        function setupSplitText() {
+            const titles = document.querySelectorAll('.era-title');
+            
+            titles.forEach(title => {
+                const html = title.innerHTML.trim();
+                title.innerHTML = '';
+                
+                // Split by <br> tags first to handle manual line breaks
+                const lines = html.split(/<br\s*\/?>/i);
+                let globalCharIndex = 0;
+                
+                lines.forEach((line, lineIndex) => {
+                    // Create a span for each line
+                    if (lineIndex > 0) {
+                        // Add line break between lines
+                        const br = document.createElement('br');
+                        title.appendChild(br);
+                    }
+                    
+                    // Split each line into characters
+                    line.trim().split('').forEach((char) => {
+                        const span = document.createElement('span');
+                        span.className = 'char';
+                        span.style.setProperty('--char-index', globalCharIndex);
+                        span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
+                        title.appendChild(span);
+                        globalCharIndex++;
+                    });
+                });
+            });
+        }
+
+        // Neural network background
+        function setupNeuralNetwork() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const neuralBg = document.getElementById('neuralBg');
+            neuralBg.appendChild(canvas);
+
+            let nodes = [];
+            let frame = 0;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                nodes = createNodes();
+            }
+
+            function createNodes() {
+                const nodeCount = 30;
+                const newNodes = [];
+                for (let i = 0; i < nodeCount; i++) {
+                    newNodes.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.2,
+                        vy: (Math.random() - 0.5) * 0.2
+                    });
+                }
+                return newNodes;
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                frame++;
+
+                // Update and draw nodes
+                nodes.forEach((node, i) => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+                    // Draw connections
+                    nodes.forEach((other, j) => {
+                        if (i < j) {
+                            const dist = Math.hypot(node.x - other.x, node.y - other.y);
+                            if (dist < 150) {
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(other.x, other.y);
+                                ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - dist / 150)})`;
+                                ctx.stroke();
+                            }
+                        }
+                    });
+
+                    // Draw node
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(59, 130, 246, 0.5)';
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            animate();
+        }
+
+        // Particle system
+        function setupParticles() {
+            const particleField = document.getElementById('particleField');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.animationDuration = `${15 + Math.random() * 10}s`;
+                particleField.appendChild(particle);
+            }
+        }
+
+        // Scroll progress
+        function setupScrollProgress() {
+            const progressFill = document.getElementById('progressFill');
+            
+            function updateProgress() {
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrolled = (window.pageYOffset / scrollHeight) * 100;
+                progressFill.style.width = `${scrolled}%`;
+            }
+
+            window.addEventListener('scroll', updateProgress);
+            updateProgress();
+        }
+
+        // Intersection observer for animations with scroll direction
+        function setupIntersectionObserver() {
+            let lastScrollY = window.pageYOffset;
+            let ticking = false;
+            
+            // Track scroll direction
+            function updateScrollDirection() {
+                const scrollY = window.pageYOffset;
+                const direction = scrollY > lastScrollY ? 'down' : 'up';
+                lastScrollY = scrollY;
+                document.body.dataset.scrollDirection = direction;
+                ticking = false;
+            }
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateScrollDirection);
+                    ticking = true;
+                }
+            });
+            
+            const options = {
+                threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
+                rootMargin: '-10% 0px -10% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const target = entry.target;
+                    
+                    if (target.classList.contains('era-separator')) {
+                        // Skip normal processing if navigating via orbs
+                        if (document.body.getAttribute('data-navigating') === 'true') return;
+                        
+                        // Handle era separators with scroll-linked animation
+                        const rect = target.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+                        const elementCenter = rect.top + rect.height / 2;
+                        const distanceFromCenter = Math.abs(elementCenter - viewportHeight / 2);
+                        const maxDistance = viewportHeight / 2;
+                        const visibility = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+                        
+                        const easedVisibility = easeInOutCubic(visibility);
+                        target.style.setProperty('--visibility', easedVisibility);
+                        
+                        // Add visible class when mostly visible
+                        if (visibility > 0.3 && !target.classList.contains('visible')) {
+                            target.classList.add('visible');
+                            target.classList.remove('hiding');
+                        } else if (visibility <= 0.3 && target.classList.contains('visible')) {
+                            target.classList.add('hiding');
+                            setTimeout(() => {
+                                if (target.classList.contains('hiding')) {
+                                    target.classList.remove('visible');
+                                    target.classList.remove('hiding');
+                                }
+                            }, 800);
+                        }
+                    } else {
+                        // Regular timeline items
+                        if (entry.isIntersecting) {
+                            target.classList.add('visible');
+                        }
+                    }
+                });
+            }, options);
+
+            // Observe all animatable elements
+            document.querySelectorAll('.timeline-item, .era-separator').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Initialize visibility for all era separators
+            document.querySelectorAll('.era-separator').forEach(separator => {
+                separator.style.setProperty('--visibility', '0');
+            });
+            
+            // Update era separators on scroll for smooth animations
+            function updateEraSeparators() {
+                // Skip updates if navigating via orbs
+                if (document.body.getAttribute('data-navigating') === 'true') return;
+                
+                document.querySelectorAll('.era-separator').forEach(separator => {
+                    const rect = separator.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+                    const elementCenter = rect.top + rect.height / 2;
+                    const distanceFromCenter = Math.abs(elementCenter - viewportHeight / 2);
+                    const maxDistance = viewportHeight / 2;
+                    const visibility = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+                    const easedVisibility = easeInOutCubic(visibility);
+                    
+                    separator.style.setProperty('--visibility', easedVisibility);
+                });
+            }
+            
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(updateEraSeparators);
+            }, { passive: true });
+        }
+
+        // Navigation with fixed mapping
+        function setupNavigation() {
+            const navOrbs = document.querySelectorAll('.nav-orb');
+            let isNavigating = false;
+            
+            navOrbs.forEach(orb => {
+                orb.addEventListener('click', () => {
+                    const targetId = orb.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        // Set navigation flag
+                        isNavigating = true;
+                        document.body.setAttribute('data-navigating', 'true');
+                        
+                        // Auto-reset navigation state after 2 seconds as failsafe
+                        setTimeout(() => {
+                            isNavigating = false;
+                            document.body.removeAttribute('data-navigating');
+                        }, 2000);
+                        
+                        // If it's an era separator, prepare it for clean animation
+                        if (targetSection.classList.contains('era-separator')) {
+                            // Reset any in-progress animations
+                            targetSection.classList.remove('visible', 'hiding');
+                            targetSection.style.setProperty('--visibility', '0');
+                            
+                            // Force a reflow to ensure the reset takes effect
+                            void targetSection.offsetHeight;
+                        }
+                        
+                        // Calculate position to center the section title in viewport
+                        const rect = targetSection.getBoundingClientRect();
+                        const absoluteTop = window.pageYOffset + rect.top;
+                        const offset = window.innerHeight / 3; // Position title 1/3 down the viewport
+                        
+                        window.scrollTo({
+                            top: absoluteTop - offset,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Trigger clean animation after scroll completes
+                        setTimeout(() => {
+                            if (targetSection.classList.contains('era-separator')) {
+                                // Animate visibility smoothly from 0 to 1
+                                let start = null;
+                                const duration = 800;
+                                
+                                function animateVisibility(timestamp) {
+                                    if (!start) start = timestamp;
+                                    const progress = Math.min((timestamp - start) / duration, 1);
+                                    
+                                    // Use easing for smooth animation
+                                    const easedProgress = easeInOutCubic(progress);
+                                    targetSection.style.setProperty('--visibility', easedProgress);
+                                    
+                                    if (progress < 1) {
+                                        requestAnimationFrame(animateVisibility);
+                                    } else {
+                                        targetSection.classList.add('visible');
+                                        // Reset navigation flag
+                                        isNavigating = false;
+                                        document.body.removeAttribute('data-navigating');
+                                    }
+                                }
+                                
+                                requestAnimationFrame(animateVisibility);
+                            } else {
+                                targetSection.classList.add('visible');
+                                // Reset navigation flag
+                                isNavigating = false;
+                                document.body.removeAttribute('data-navigating');
+                            }
+                        }, 600); // Wait for scroll to mostly complete
+                    }
+                });
+            });
+            
+            // Make isNavigating available globally
+            window.isNavigating = () => isNavigating;
+        }
+
+        // Smooth scroll and navigation tracking
+        function setupSmoothScroll() {
+            // Update active nav orb based on scroll position
+            let ticking = false;
+            
+            function updateActiveNav() {
+                const sections = document.querySelectorAll('section[id], .era-separator[id], .hero[id]');
+                const navOrbs = document.querySelectorAll('.nav-orb');
+                const scrollPosition = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                const threshold = windowHeight * 0.4; // Activate when section is 40% down the viewport
+                
+                // Clear all active states
+                navOrbs.forEach(orb => orb.classList.remove('active'));
+                
+                // Find the current section
+                let currentSection = null;
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top;
+                    
+                    // Section is considered "current" if its top is above the threshold line
+                    if (sectionTop <= threshold) {
+                        currentSection = section;
+                    }
+                });
+                
+                // Activate the corresponding orb
+                if (currentSection) {
+                    const targetId = currentSection.id;
+                    const activeOrb = document.querySelector(`.nav-orb[data-target="${targetId}"]`);
+                    if (activeOrb) {
+                        activeOrb.classList.add('active');
+                    }
+                }
+
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateActiveNav);
+                    ticking = true;
+                }
+            });
+            
+            // Initial check
+            updateActiveNav();
+        }
+
+        function scrollToTimeline() {
+            const firstSection = document.querySelector('.timeline-section');
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
