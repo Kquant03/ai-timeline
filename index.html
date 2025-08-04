@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI History Timeline</title>
+    <title>AI History Timeline - Journey Through Intelligence</title>
     <style>
         * {
             margin: 0;
@@ -21,15 +21,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Performance optimizations */
-        .gpu-accelerated {
-            transform: translateZ(0);
-            will-change: transform;
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-        
-        /* Simplified background */
+        /* Subtle animated background gradient */
         .background-gradient {
             position: fixed;
             top: 0;
@@ -37,77 +29,211 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 87, 34, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 87, 34, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(100, 181, 246, 0.03) 0%, transparent 70%),
                 #0a0a0a;
-            z-index: -1;
+            z-index: -2;
+            animation: gradientShift 20s ease-in-out infinite;
         }
         
-        /* Minimal particles for performance */
-        .particles {
+        @keyframes gradientShift {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(1deg);
+            }
+        }
+        
+        /* Subtle floating orbs instead of particles */
+        .orbs {
             position: fixed;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: -1;
         }
         
-        .particle {
+        .orb {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(100, 181, 246, 0.6);
             border-radius: 50%;
-            bottom: -10px;
-            animation: float-up 15s infinite linear;
+            filter: blur(40px);
+            opacity: 0;
+            animation: floatOrb 30s infinite;
         }
         
-        @keyframes float-up {
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(33, 150, 243, 0.3) 0%, transparent 70%);
+            left: -150px;
+            animation-delay: 0s;
+        }
+        
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 87, 34, 0.2) 0%, transparent 70%);
+            right: -100px;
+            animation-delay: 10s;
+        }
+        
+        .orb:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(100, 181, 246, 0.25) 0%, transparent 70%);
+            left: 50%;
+            animation-delay: 20s;
+        }
+        
+        @keyframes floatOrb {
             0% {
-                bottom: -10px;
+                transform: translateY(100vh) translateX(0) scale(0.8);
                 opacity: 0;
             }
             10% {
-                opacity: 0.6;
+                opacity: 0.4;
             }
             90% {
-                opacity: 0.6;
+                opacity: 0.4;
             }
             100% {
-                bottom: 110%;
+                transform: translateY(-100vh) translateX(100px) scale(1.2);
                 opacity: 0;
             }
         }
         
-        /* Hero section */
+        /* Hero section with legend */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
             z-index: 2;
+            padding: 40px 20px;
         }
         
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: clamp(3rem, 8vw, 5.5rem);
             font-weight: 700;
             text-align: center;
-            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 50%, #FF5722 100%);
+            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 25%, #42A5F5 50%, #FF5722 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
-            transform: translateZ(0);
+            animation: titleGlow 4s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
         
         .hero-subtitle {
             font-size: clamp(1rem, 3vw, 1.5rem);
             color: #64B5F6;
-            opacity: 0.8;
+            opacity: 0;
             text-align: center;
             margin-bottom: 10px;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .hero-subtitle:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .hero-subtitle:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        /* Legend */
+        .legend {
+            margin-top: 60px;
+            padding: 25px 35px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .legend-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 3px solid #0a0a0a;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
+            position: relative;
+        }
+        
+        .legend-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        .legend-dot.regular {
+            background: #2196F3;
+        }
+        
+        .legend-dot.major {
+            background: #FF5722;
+            width: 28px;
+            height: 28px;
+        }
+        
+        .legend-dot.future {
+            background: #8B5CF6;
+        }
+        
+        .legend-dot.reflection {
+            background: #10B981;
+        }
+        
+        .legend-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
         }
         
         .scroll-indicator {
@@ -115,25 +241,28 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-            animation: bounce 2s infinite;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards, float 3s ease-in-out infinite 1.2s;
+            cursor: pointer;
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
+        @keyframes fadeIn {
+            to {
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
                 transform: translateX(-50%) translateY(0);
             }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
+            50% {
+                transform: translateX(-50%) translateY(10px);
             }
         }
         
         .scroll-indicator:hover {
-            opacity: 1;
+            opacity: 1 !important;
         }
         
         /* Timeline sections */
@@ -143,14 +272,6 @@
             z-index: 10;
         }
         
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            text-align: center;
-            margin-bottom: 60px;
-            color: #64B5F6;
-            font-weight: 700;
-        }
-        
         .timeline-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -158,7 +279,7 @@
             padding: 0 40px;
         }
         
-        /* Optimized timeline line */
+        /* Timeline line with glow */
         .timeline-line {
             position: absolute;
             left: 50%;
@@ -174,13 +295,31 @@
             transform: translateX(-50%);
         }
         
-        /* Timeline items with optimized animations */
+        .timeline-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(33, 150, 243, 0.2) 10%,
+                rgba(33, 150, 243, 0.2) 90%,
+                transparent 100%
+            );
+            filter: blur(10px);
+            pointer-events: none;
+        }
+        
+        /* Timeline items with refined animations */
         .timeline-item {
             position: relative;
             margin-bottom: 80px;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .timeline-item.visible {
@@ -198,7 +337,7 @@
             padding-left: 52%;
         }
         
-        /* Simplified timeline dots */
+        /* Timeline dots with subtle glow animation */
         .timeline-dot {
             position: absolute;
             width: 24px;
@@ -210,82 +349,135 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            transition: transform 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
         }
         
         .timeline-item:hover .timeline-dot {
-            transform: translateX(-50%) scale(1.3);
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 0 30px rgba(33, 150, 243, 0.6);
         }
         
         .timeline-dot.major {
             width: 32px;
             height: 32px;
             background: #FF5722;
+            box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
         }
         
-        /* Optimized content cards */
+        /* Content cards with refined hover */
         .timeline-content {
-            background: rgba(20, 20, 20, 0.9);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .timeline-content:hover::before {
+            transform: translateX(100%);
         }
         
         .timeline-content:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(33, 150, 243, 0.05);
+            border-color: rgba(33, 150, 243, 0.2);
         }
         
-        /* Simplified date badges */
+        /* Date badges with glow */
         .timeline-date {
             display: inline-block;
-            background: #1a1a1a;
+            background: rgba(26, 26, 26, 0.9);
             color: #64B5F6;
-            padding: 6px 16px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 25px;
             font-weight: 600;
             font-size: 13px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             border: 1px solid #2196F3;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
         }
         
         .timeline-date.future {
             border-color: #8B5CF6;
             color: #8B5CF6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
         
         .timeline-date.reflection {
             border-color: #10B981;
             color: #10B981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
         
         .timeline-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             color: #ffffff;
             line-height: 1.3;
         }
         
         .timeline-description {
-            color: #b0b0b0;
-            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
             font-size: 15px;
         }
         
         .timeline-tech {
-            margin-top: 12px;
+            margin-top: 15px;
             font-size: 13px;
             color: #64B5F6;
             font-style: italic;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0.9;
         }
         
-        /* Simplified era separators */
+        /* Era separators with refined design */
         .era-separator {
             position: relative;
             height: 200px;
@@ -298,35 +490,63 @@
         .era-separator::before {
             content: '';
             position: absolute;
-            width: 80%;
+            width: 60%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #2196F3, transparent);
-            opacity: 0.5;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(33, 150, 243, 0.3), 
+                rgba(33, 150, 243, 0.5),
+                rgba(33, 150, 243, 0.3),
+                transparent
+            );
         }
         
         .era-title {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: 600;
             text-align: center;
-            padding: 15px 30px;
-            background: #0a0a0a;
-            border: 2px solid #2196F3;
-            border-radius: 40px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(20, 20, 20, 0.95));
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            border-radius: 50px;
             position: relative;
             z-index: 2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .era-title::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #2196F3, #FF5722);
+            border-radius: 50px;
+            z-index: -1;
+            opacity: 0.7;
         }
         
         /* Footer */
         .footer {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 100px 20px 60px;
             color: #64B5F6;
-            font-size: 1.1em;
+            font-size: 1.2em;
             position: relative;
+            opacity: 0.8;
         }
         
-        /* Responsive */
+        /* Responsive adjustments */
         @media (max-width: 768px) {
+            .legend {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 25px;
+            }
+            
             .timeline-item:nth-child(even),
             .timeline-item:nth-child(odd) {
                 padding: 0 20px 0 60px;
@@ -350,26 +570,51 @@
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
-                transition: none !important;
+                transition: opacity 0.3s ease !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Simplified background -->
+    <!-- Subtle animated background -->
     <div class="background-gradient"></div>
     
-    <!-- Minimal particles -->
-    <div class="particles" id="particles"></div>
+    <!-- Floating orbs for ambiance -->
+    <div class="orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
     
-    <!-- Hero Section -->
+    <!-- Hero Section with Legend -->
     <div class="hero">
-        <h1 class="gpu-accelerated">The Evolution of AI</h1>
+        <h1>The Evolution of AI</h1>
         <p class="hero-subtitle">From Ancient Logic to Modern Intelligence</p>
         <p class="hero-subtitle">2,400 Years of Human Ingenuity</p>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot regular"></div>
+                <span class="legend-label">Key Development</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot major"></div>
+                <span class="legend-label">Major Breakthrough</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot future"></div>
+                <span class="legend-label">Future Outlook</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot reflection"></div>
+                <span class="legend-label">Reflection</span>
+            </div>
+        </div>
+        
         <div class="scroll-indicator">
             <svg width="30" height="30" viewBox="0 0 30 30">
-                <path d="M15 8 L15 22 M9 16 L15 22 L21 16" stroke="#64B5F6" stroke-width="2" fill="none"/>
+                <path d="M15 8 L15 22 M9 16 L15 22 L21 16" stroke="#64B5F6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
     </div>
@@ -542,6 +787,180 @@
                         could perform any computation. Establishes the theoretical foundation of computer science.
                     </p>
                     <div class="timeline-tech">Legacy: Defined the limits of mechanical computation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Current State and Future -->
+    <div class="era-separator">
+        <h2 class="era-title">Current State and Future of AI</h2>
+    </div>
+    
+    <section class="timeline-section">
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Claude Opus 4</h3>
+                    <p class="timeline-description">
+                        Current state-of-the-art with 72.5% on SWE-bench. Features hybrid reasoning with 64K thinking tokens, 
+                        capable of 7+ hours autonomous coding. Represents culmination of 2,400 years of progress 
+                        from Aristotle's logic to modern AI.
+                    </p>
+                    <div class="timeline-tech">Capabilities: Extended reasoning, multimodal understanding, code generation</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Meta Llama 4</h3>
+                    <p class="timeline-description">
+                        First open-weight natively multimodal models with mixture-of-experts architecture, 
+                        challenging closed-source model dominance and advancing open AI development.
+                    </p>
+                    <div class="timeline-tech">Innovation: Open multimodal foundation models</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Landscape</h3>
+                    <p class="timeline-description">
+                        Thousands of models from numerous companies: Google's Gemini, Meta's LLaMA 3, 
+                        Anthropic's Claude, OpenAI's GPT series, Mistral, DeepSeek, Qwen, and many others. 
+                        AI integration becoming ubiquitous in software.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Global AI Innovation</h3>
+                    <p class="timeline-description">
+                        • China: Baidu ERNIE Bot serves 200M users<br>
+                        • Israel: 2,170 AI companies (30% of tech sector)<br>
+                        • Canada: Vector Institute and Mila lead research<br>
+                        • South Korea: Exaone 3.0 open-source LLM<br>
+                        • Europe: Leading AI regulation and ethics<br>
+                        • Japan: Society 5.0 integrating AI with robotics<br>
+                        • Latin America: Chile's Latam-GPT project
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Technical Innovations</h3>
+                    <p class="timeline-description">
+                        • Efficient architectures: Mamba, RWKV challenging transformers<br>
+                        • Mixture of Experts for scale<br>
+                        • Flash Attention for memory efficiency<br>
+                        • LoRA/QLoRA for efficient fine-tuning<br>
+                        • RAG for knowledge integration<br>
+                        • Native multimodality in foundation models
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">AI in Production</h3>
+                    <p class="timeline-description">
+                        • 750,000+ robots in Amazon warehouses<br>
+                        • Robo-advisors managing $4.66 trillion projected by 2027<br>
+                        • AI agents handling customer service at scale<br>
+                        • Autonomous coding assistants in development teams<br>
+                        • AI-powered drug discovery accelerating
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Current Challenges</h3>
+                    <p class="timeline-description">
+                        • Hallucination and reliability<br>
+                        • Computational costs and energy usage<br>
+                        • AI safety and alignment<br>
+                        • Corporate responsibility<br>
+                        • Democratization vs. concentration of power<br>
+                        • Global governance and regulation
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3 class="timeline-title">Rapid Evolution</h3>
+                    <p class="timeline-description">
+                        Field changes so rapidly that long-term frameworks become obsolete quickly. 
+                        Platforms like GitHub, HuggingFace, and Leanpub enable real-time knowledge sharing. 
+                        Open-source community driving innovation alongside big tech.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot major"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date future">Future</span>
+                    <h3 class="timeline-title">The Road Ahead</h3>
+                    <p class="timeline-description">
+                        From Aristotle's binary logic to Claude Opus 4's extended reasoning, 
+                        AI represents humanity's longest intellectual project. The journey continues with:<br><br>
+                        • AGI aspirations (Shane Legg: 50% chance by 2028)<br>
+                        • Multimodal reasoning<br>
+                        • Embodied AI and robotics<br>
+                        • Quantum-AI integration<br>
+                        • Ensuring beneficial outcomes for humanity
+                    </p>
+                    <div class="timeline-tech">Key: Balancing capability with safety and accessibility</div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date reflection">Reflection</span>
+                    <h3 class="timeline-title">2,400 Years of Progress</h3>
+                    <p class="timeline-description">
+                        What began with philosophers asking "What is thought?" has evolved into systems 
+                        that can write, create, reason, and assist. Each breakthrough built on centuries 
+                        of accumulated knowledge, showing AI as not a sudden invention but humanity's 
+                        longest quest to understand and recreate intelligence.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date reflection">Reflection</span>
+                    <h3 class="timeline-title">You Were Here</h3>
+                    <p class="timeline-description">
+                        Reader finishes browsing this timeline, brain slightly dizzy from the scope of human ambition. 
+                        Returns to main text with newfound appreciation for how a thought experiment in ancient Greece 
+                        somehow led to an AI that can help write books about itself. 
+                        The loop closes. The story continues.
+                    </p>
                 </div>
             </div>
         </div>
@@ -2502,674 +2921,3 @@
                         Demonstrates that alignment matters more than scale.
                     </p>
                     <div class="timeline-tech">Breakthrough: Human feedback improves AI behavior</div>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">Chinchilla Scaling Laws</h3>
-                    <p class="timeline-description">
-                        DeepMind publishes "compute-optimal" training showing models need ~20 tokens per parameter. 
-                        70B Chinchilla outperforms much larger models, revolutionizing training efficiency.
-                    </p>
-                    <div class="timeline-tech">Impact: Changed how all LLMs are trained</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">Flash Attention</h3>
-                    <p class="timeline-description">
-                        Dao et al. introduce IO-aware exact attention algorithm, reducing memory usage 
-                        from quadratic to linear and enabling much longer context windows efficiently.
-                    </p>
-                    <div class="timeline-tech">Impact: Enabled 100K+ token context windows</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">Midjourney Beta Launch</h3>
-                    <p class="timeline-description">
-                        David Holz releases Midjourney, becoming cultural phenomenon with artistic, 
-                        dreamlike image generation. Operates entirely through Discord, reaching millions.
-                    </p>
-                    <div class="timeline-tech">Impact: Made AI art mainstream and accessible</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">Stable Diffusion</h3>
-                    <p class="timeline-description">
-                        Stability AI releases open-source text-to-image diffusion model. 
-                        Democratizes AI art generation, sparking creative revolution and controversy.
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">OpenAI Whisper Released</h3>
-                    <p class="timeline-description">
-                        Open-source speech recognition trained on 680,000 hours of multilingual audio. 
-                        Supports 99 languages with near-human accuracy, democratizing speech AI.
-                    </p>
-                    <div class="timeline-tech">Models: Six sizes from 39M to 1.5B parameters</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">Instant Neural Graphics Primitives</h3>
-                    <p class="timeline-description">
-                        NVIDIA introduces Instant NGP, achieving real-time neural radiance field (NeRF) rendering. 
-                        Reduces training time from hours to seconds using multi-resolution hash encoding, 
-                        enabling instant 3D scene reconstruction from 2D images.
-                    </p>
-                    <div class="timeline-tech">Breakthrough: Real-time neural 3D rendering</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">LangChain Framework</h3>
-                    <p class="timeline-description">
-                        Harrison Chase releases LangChain, enabling complex LLM applications with 
-                        chains, agents, and tools. Accelerates development of AI-powered applications.
-                    </p>
-                    <div class="timeline-tech">Impact: Simplified building LLM applications</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">ChatGPT Launch</h3>
-                    <p class="timeline-description">
-                        OpenAI releases ChatGPT on November 30, reaching 100M users in 2 months - fastest in history. 
-                        Brings conversational AI to mainstream, triggering global AI awareness and investment boom.
-                    </p>
-                    <div class="timeline-tech">Impact: AI becomes household technology</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">AlphaFold Database Release</h3>
-                    <p class="timeline-description">
-                        DeepMind releases structures for 200 million proteins - nearly all known to science. 
-                        Makes decades of potential research freely available overnight.
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2022</span>
-                    <h3 class="timeline-title">ElevenLabs Voice Cloning</h3>
-                    <p class="timeline-description">
-                        Founded by Piotr Dąbkowski and Mati Staniszewski, beta launches January 2023. 
-                        Achieves realistic voice cloning from just 5-30 seconds of audio, revolutionizing voice synthesis.
-                    </p>
-                    <div class="timeline-tech">Valuation: $3.3B by 2025, raises ethics concerns</div>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Auto-GPT Launches Autonomous AI Era</h3>
-                    <p class="timeline-description">
-                        Toran Bruce Richards releases Auto-GPT on March 30, gaining 177,000+ GitHub stars. 
-                        First autonomous AI agent that can break down tasks and execute them independently. 
-                        AgentGPT follows in April.
-                    </p>
-                    <div class="timeline-tech">Significance: Early AGI experiments highlight potential and limitations</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Constitutional AI</h3>
-                    <p class="timeline-description">
-                        Anthropic develops training method using AI feedback based on constitutional principles 
-                        rather than extensive human feedback. Enables more precise control.
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Meta's Segment Anything Model</h3>
-                    <p class="timeline-description">
-                        Released April 5 with SA-1B dataset containing 1.1 billion masks. 
-                        Enables zero-shot segmentation with flexible prompting (clicks, boxes, text). 
-                        Establishes computer vision foundation models.
-                    </p>
-                    <div class="timeline-tech">Team Lead: Alexander Kirillov at Meta AI</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">LlamaIndex (GPT Index) Matures</h3>
-                    <p class="timeline-description">
-                        Jerry Liu's LlamaIndex becomes essential for connecting LLMs to private data, 
-                        complementing LangChain with focus on data ingestion and retrieval.
-                    </p>
-                    <div class="timeline-tech">Innovation: Advanced RAG techniques</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">LIDA - Automated Data Visualization</h3>
-                    <p class="timeline-description">
-                        Microsoft Research releases LIDA (Language-based Interactive Data Analysis), 
-                        combining LLMs with visualization generation. Automatically creates meaningful 
-                        charts and insights from natural language queries about data.
-                    </p>
-                    <div class="timeline-tech">Innovation: LLM-powered automated analytics</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Claude 1 Launch</h3>
-                    <p class="timeline-description">
-                        Anthropic releases Claude with 9,000 token context and strong conversational abilities. 
-                        Emphasizes safety and helpfulness through Constitutional AI training.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">GPT-4</h3>
-                    <p class="timeline-description">
-                        OpenAI's multimodal model with estimated 500B-1.7T parameters. 
-                        Shows significant improvements in reasoning and reduced hallucination.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Mixtral 8x7B</h3>
-                    <p class="timeline-description">
-                        Mistral AI releases open-source Mixture of Experts model, achieving GPT-3.5 
-                        performance with efficient sparse activation. Democratizes advanced architectures.
-                    </p>
-                    <div class="timeline-tech">Innovation: Open MoE models become viable</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Video Generation Explosion</h3>
-                    <p class="timeline-description">
-                        Runway Gen-2, Pika Labs, and Stability AI's SVD democratize video generation. 
-                        Text-to-video becomes accessible to creators, transforming content production.
-                    </p>
-                    <div class="timeline-tech">Impact: AI enters video production mainstream</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Open Source Explosion</h3>
-                    <p class="timeline-description">
-                        Meta's LLaMA leak sparks open-source revolution. 
-                        Mistral, Falcon, MPT, Microsoft Phi, Google Gemma, Cohere Command R, 
-                        and dozens of models democratize LLM access.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">FDA Approves 700+ AI Medical Devices</h3>
-                    <p class="timeline-description">
-                        Over 700 AI algorithms approved for medical use, with 76% in radiology. 
-                        AI becomes standard in medical imaging and diagnostics.
-                    </p>
-                    <div class="timeline-tech">Applications: Cancer detection, cardiac analysis, stroke diagnosis</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2023</span>
-                    <h3 class="timeline-title">Google NotebookLM</h3>
-                    <p class="timeline-description">
-                        Steven Johnson leads development of AI research assistant that can analyze documents 
-                        and generate podcast-style audio discussions, pioneering multimodal knowledge synthesis.
-                    </p>
-                    <div class="timeline-tech">Innovation: AI-generated educational podcasts</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">Sora by OpenAI</h3>
-                    <p class="timeline-description">
-                        OpenAI unveils Sora, generating cinema-quality minute-long videos from text. 
-                        Demonstrates understanding of physics, persistence, and complex scene dynamics.
-                    </p>
-                    <div class="timeline-tech">Breakthrough: Photorealistic video with coherent physics</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">Claude 3 Family</h3>
-                    <p class="timeline-description">
-                        Anthropic releases Opus, Sonnet, and Haiku models with multimodal capabilities 
-                        and 200,000 token context windows.
-                    </p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">India's AI Mission Launches</h3>
-                    <p class="timeline-description">
-                        IndiaAI Mission approved March 7 with Rs 10,370 crore budget. 
-                        Jugalbandi supports 50+ Indian languages, demonstrating AI for linguistic diversity.
-                    </p>
-                    <div class="timeline-tech">Focus: Inclusive AI development</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">Groq LPU - Ultra-Fast Inference</h3>
-                    <p class="timeline-description">
-                        Groq's Language Processing Units achieve 500+ tokens/second inference speed, 
-                        10x faster than GPUs. Demonstrates potential for real-time AI applications.
-                    </p>
-                    <div class="timeline-tech">Innovation: Specialized AI inference hardware</div>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">African Union AI Strategy</h3>
-                    <p class="timeline-description">
-                        Continental AI Strategy endorsed July 2024. Eight African nations have strategies, 
-                        with focus on language preservation and local solutions. Mauritius first in 2018.
-                    </p>
-                    <div class="timeline-tech">Priority: African language AI models</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">EU AI Act Enters Force</h3>
-                    <p class="timeline-description">
-                        World's first comprehensive AI regulation formally adopted in May, enters force August. 
-                        Sets global precedent for AI governance with risk-based approach.
-                    </p>
-                    <div class="timeline-tech">Impact: Shapes global AI regulation standards</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">Humanoid Robot Renaissance</h3>
-                    <p class="timeline-description">
-                        Tesla Optimus, Figure 01, 1X Technologies, and others showcase advanced humanoid robots. 
-                        Figure raises $675M with OpenAI backing, signaling serious commercialization push.
-                    </p>
-                    <div class="timeline-tech">Goal: General-purpose robots for human environments</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">Claude Computer Use</h3>
-                    <p class="timeline-description">
-                        Anthropic introduces AI that can directly control computers, 
-                        marking shift from text generation to autonomous action.
-                    </p>
-                    <div class="timeline-tech">Capability: AI as autonomous agent</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">OpenAI o1 and o3 Models</h3>
-                    <p class="timeline-description">
-                        OpenAI shifts from pure generation to deliberate reasoning with o-series models, 
-                        showing significant improvements in mathematical and logical reasoning.
-                    </p>
-                    <div class="timeline-tech">Innovation: Chain-of-thought reasoning at scale</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2024</span>
-                    <h3 class="timeline-title">DeepSeek Open Models</h3>
-                    <p class="timeline-description">
-                        Chinese company DeepSeek releases models achieving GPT-4 level performance 
-                        at fraction of training cost, challenging assumptions about compute requirements.
-                    </p>
-                    <div class="timeline-tech">Significance: Democratizes advanced AI globally</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Current State and Future -->
-    <div class="era-separator">
-        <h2 class="era-title">Current State and Future of AI</h2>
-    </div>
-    
-    <section class="timeline-section">
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Claude Opus 4</h3>
-                    <p class="timeline-description">
-                        Current state-of-the-art with 72.5% on SWE-bench. Features hybrid reasoning with 64K thinking tokens, 
-                        capable of 7+ hours autonomous coding. Represents culmination of 2,400 years of progress 
-                        from Aristotle's logic to modern AI.
-                    </p>
-                    <div class="timeline-tech">Capabilities: Extended reasoning, multimodal understanding, code generation</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Meta Llama 4</h3>
-                    <p class="timeline-description">
-                        First open-weight natively multimodal models with mixture-of-experts architecture, 
-                        challenging closed-source model dominance and advancing open AI development.
-                    </p>
-                    <div class="timeline-tech">Innovation: Open multimodal foundation models</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Current Landscape</h3>
-                    <p class="timeline-description">
-                        Thousands of models from numerous companies: Google's Gemini, Meta's LLaMA 3, 
-                        Anthropic's Claude, OpenAI's GPT series, Mistral, DeepSeek, Qwen, and many others. 
-                        AI integration becoming ubiquitous in software.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Global AI Innovation</h3>
-                    <p class="timeline-description">
-                        • China: Baidu ERNIE Bot serves 200M users<br>
-                        • Israel: 2,170 AI companies (30% of tech sector)<br>
-                        • Canada: Vector Institute and Mila lead research<br>
-                        • South Korea: Exaone 3.0 open-source LLM<br>
-                        • Europe: Leading AI regulation and ethics<br>
-                        • Japan: Society 5.0 integrating AI with robotics<br>
-                        • Latin America: Chile's Latam-GPT project
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Technical Innovations</h3>
-                    <p class="timeline-description">
-                        • Efficient architectures: Mamba, RWKV challenging transformers<br>
-                        • Mixture of Experts for scale<br>
-                        • Flash Attention for memory efficiency<br>
-                        • LoRA/QLoRA for efficient fine-tuning<br>
-                        • RAG for knowledge integration<br>
-                        • Native multimodality in foundation models
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">AI in Production</h3>
-                    <p class="timeline-description">
-                        • 750,000+ robots in Amazon warehouses<br>
-                        • Robo-advisors managing $4.66 trillion projected by 2027<br>
-                        • AI agents handling customer service at scale<br>
-                        • Autonomous coding assistants in development teams<br>
-                        • AI-powered drug discovery accelerating
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Current Challenges</h3>
-                    <p class="timeline-description">
-                        • Hallucination and reliability<br>
-                        • Computational costs and energy usage<br>
-                        • AI safety and alignment<br>
-                        • Corporate responsibility<br>
-                        • Democratization vs. concentration of power<br>
-                        • Global governance and regulation
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date">2025</span>
-                    <h3 class="timeline-title">Rapid Evolution</h3>
-                    <p class="timeline-description">
-                        Field changes so rapidly that long-term frameworks become obsolete quickly. 
-                        Platforms like GitHub, HuggingFace, and Leanpub enable real-time knowledge sharing. 
-                        Open-source community driving innovation alongside big tech.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot major"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date future">Future</span>
-                    <h3 class="timeline-title">The Road Ahead</h3>
-                    <p class="timeline-description">
-                        From Aristotle's binary logic to Claude Opus 4's extended reasoning, 
-                        AI represents humanity's longest intellectual project. The journey continues with:<br><br>
-                        • AGI aspirations (Shane Legg: 50% chance by 2028)<br>
-                        • Multimodal reasoning<br>
-                        • Embodied AI and robotics<br>
-                        • Quantum-AI integration<br>
-                        • Ensuring beneficial outcomes for humanity
-                    </p>
-                    <div class="timeline-tech">Key: Balancing capability with safety and accessibility</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date reflection">Reflection</span>
-                    <h3 class="timeline-title">2,400 Years of Progress</h3>
-                    <p class="timeline-description">
-                        What began with philosophers asking "What is thought?" has evolved into systems 
-                        that can write, create, reason, and assist. Each breakthrough built on centuries 
-                        of accumulated knowledge, showing AI as not a sudden invention but humanity's 
-                        longest quest to understand and recreate intelligence.
-                    </p>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <span class="timeline-date reflection">Reflection</span>
-                    <h3 class="timeline-title">You Were Here</h3>
-                    <p class="timeline-description">
-                        Reader finishes browsing this timeline, brain slightly dizzy from the scope of human ambition. 
-            Returns to main text with newfound appreciation for how a thought experiment in ancient Greece 
-            somehow led to an AI that can help write books about itself. 
-            The loop closes. The story continues.
-                    </p>
-                </div>
-            </div>
-                    </div>
-    </section>
-    
-    <!-- Footer -->
-    <div class="footer">
-        <p>The journey continues...</p>
-    </div>
-    
-    <!-- JavaScript for animations and interactions -->
-    <script>
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20; // Reduced for performance
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
-        // Intersection Observer for timeline animations
-        function setupScrollAnimations() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            timelineItems.forEach(item => {
-                observer.observe(item);
-            });
-        }
-        
-        // Smooth scroll for anchor links
-        function setupSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-        
-        // Initialize everything when DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            setupScrollAnimations();
-            setupSmoothScroll();
-            
-            // Make first few items visible immediately
-            const firstItems = document.querySelectorAll('.timeline-item:nth-child(-n+3)');
-            setTimeout(() => {
-                firstItems.forEach(item => item.classList.add('visible'));
-            }, 100);
-        });
-        
-        // Handle scroll indicator click
-        document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
-            const firstSection = document.querySelector('.timeline-section');
-            if (firstSection) {
-                firstSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    </script>
-</body>
-</html>
