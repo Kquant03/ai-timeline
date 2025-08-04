@@ -3,7 +3,7 @@
 An interactive timeline tracing artificial intelligence from ancient logic to modern language models - spanning 2,400 years of human ingenuity.
 
 ## 🌐 Live Site
-[View the timeline](https://your-site-name.netlify.app)
+[View the timeline](https://statuesque-duckanoo-6a68e1.netlify.app/)
 
 ## 📖 About
 This timeline is an appendix from my upcoming book on AI. It visualizes the complete journey from Aristotle's binary logic to today's advanced AI systems, highlighting key breakthroughs, failures, and the people who shaped this technology.
